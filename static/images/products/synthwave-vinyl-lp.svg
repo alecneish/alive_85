@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="vinylGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff2040" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffb8ff" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="#05050a"/>
+  <!-- Album sleeve behind -->
+  <rect x="75" y="90" width="250" height="250" fill="none" stroke="#4d4dff" stroke-width="2" opacity="0.4"/>
+  <!-- Vinyl record -->
+  <circle cx="215" cy="210" r="120" fill="url(#vinylGrad)" stroke="#ffb8ff" stroke-width="2" filter="url(#glow)"/>
+  <!-- Grooves -->
+  <circle cx="215" cy="210" r="100" fill="none" stroke="#ffb8ff" stroke-width="0.5" opacity="0.3"/>
+  <circle cx="215" cy="210" r="85" fill="none" stroke="#ffb8ff" stroke-width="0.5" opacity="0.25"/>
+  <circle cx="215" cy="210" r="70" fill="none" stroke="#ffb8ff" stroke-width="0.5" opacity="0.2"/>
+  <circle cx="215" cy="210" r="55" fill="none" stroke="#ffb8ff" stroke-width="0.5" opacity="0.3"/>
+  <!-- Label -->
+  <circle cx="215" cy="210" r="35" fill="none" stroke="#ff2040" stroke-width="2" filter="url(#glow)"/>
+  <circle cx="215" cy="210" r="5" fill="#ff2040" filter="url(#glow)"/>
+  <!-- Label text -->
+  <text x="215" y="205" text-anchor="middle" font-family="monospace" font-size="8" fill="#ffcc00" opacity="0.8">SYNTHWAVE</text>
+  <text x="215" y="218" text-anchor="middle" font-family="monospace" font-size="6" fill="#ff2040" opacity="0.7">VOL. 85</text>
+  <!-- Reflection -->
+  <line x1="125" y1="140" x2="180" y2="165" stroke="#fff" stroke-width="0.5" opacity="0.15"/>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="400" fill="#05050a"/>
+  <!-- Pin 1: Boombox (top left) -->
+  <g transform="translate(70,70)">
+    <rect x="0" y="0" width="80" height="60" rx="6" fill="none" stroke="#ffcc00" stroke-width="1.5" filter="url(#glow)"/>
+    <rect x="18" y="15" width="16" height="12" rx="2" fill="#ffcc00" opacity="0.2"/>
+    <rect x="46" y="15" width="16" height="12" rx="2" fill="#ffcc00" opacity="0.2"/>
+    <rect x="28" y="32" width="24" height="8" fill="#ff2040" opacity="0.3"/>
+    <rect x="10" y="8" width="4" height="4" fill="#ffcc00" opacity="0.6"/>
+    <rect x="66" y="8" width="4" height="4" fill="#ffcc00" opacity="0.6"/>
+  </g>
+  <!-- Pin 2: Joystick (top right) -->
+  <g transform="translate(250,70)">
+    <rect x="0" y="0" width="80" height="60" rx="6" fill="none" stroke="#39ff14" stroke-width="1.5" filter="url(#glow)"/>
+    <rect x="28" y="38" width="24" height="8" rx="4" fill="#39ff14" opacity="0.3"/>
+    <rect x="36" y="12" width="8" height="30" rx="3" fill="none" stroke="#39ff14" stroke-width="1.5"/>
+    <circle cx="40" cy="12" r="5" fill="#ff2040" filter="url(#glow)"/>
+  </g>
+  <!-- Pin 3: Cassette (middle left) -->
+  <g transform="translate(70,175)">
+    <rect x="0" y="0" width="80" height="60" rx="6" fill="none" stroke="#00ffde" stroke-width="1.5" filter="url(#glow)"/>
+    <rect x="10" y="8" width="60" height="25" rx="2" fill="none" stroke="#00ffde" stroke-width="1" opacity="0.5"/>
+    <circle cx="25" cy="45" r="8" fill="none" stroke="#00ffde" stroke-width="1"/>
+    <circle cx="55" cy="45" r="8" fill="none" stroke="#00ffde" stroke-width="1"/>
+  </g>
+  <!-- Pin 4: CRT TV (middle right) -->
+  <g transform="translate(250,175)">
+    <rect x="0" y="0" width="80" height="60" rx="6" fill="none" stroke="#4d4dff" stroke-width="1.5" filter="url(#glow)"/>
+    <rect x="12" y="8" width="40" height="32" rx="4" fill="none" stroke="#4d4dff" stroke-width="1.5"/>
+    <line x1="12" y1="8" x2="52" y2="40" stroke="#4d4dff" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="62" cy="18" r="3" fill="#ff2040" opacity="0.6"/>
+    <circle cx="62" cy="28" r="3" fill="#39ff14" opacity="0.6"/>
+    <rect x="25" y="44" width="30" height="4" rx="1" fill="#4d4dff" opacity="0.4"/>
+  </g>
+  <!-- Pin 5: Rubik's cube (bottom left) -->
+  <g transform="translate(70,280)">
+    <rect x="0" y="0" width="80" height="60" rx="6" fill="none" stroke="#ffb8ff" stroke-width="1.5" filter="url(#glow)"/>
+    <g transform="translate(22,10)">
+      <rect x="0" y="0" width="12" height="12" fill="#ff2040" opacity="0.5"/>
+      <rect x="13" y="0" width="12" height="12" fill="#ffcc00" opacity="0.5"/>
+      <rect x="26" y="0" width="12" height="12" fill="#39ff14" opacity="0.5"/>
+      <rect x="0" y="13" width="12" height="12" fill="#4d4dff" opacity="0.5"/>
+      <rect x="13" y="13" width="12" height="12" fill="#fff" opacity="0.3"/>
+      <rect x="26" y="13" width="12" height="12" fill="#ff2040" opacity="0.5"/>
+      <rect x="0" y="26" width="12" height="12" fill="#ffcc00" opacity="0.5"/>
+      <rect x="13" y="26" width="12" height="12" fill="#00ffde" opacity="0.5"/>
+      <rect x="26" y="26" width="12" height="12" fill="#ffb8ff" opacity="0.5"/>
+    </g>
+  </g>
+  <!-- Pin 6: DeLorean (bottom right) -->
+  <g transform="translate(250,280)">
+    <rect x="0" y="0" width="80" height="60" rx="6" fill="none" stroke="#ffcc00" stroke-width="1.5" filter="url(#glow)"/>
+    <path d="M15,40 L25,22 L55,22 L65,40 Z" fill="none" stroke="#ffcc00" stroke-width="1.5"/>
+    <rect x="30" y="26" width="20" height="10" fill="none" stroke="#00ffde" stroke-width="1" opacity="0.5"/>
+    <circle cx="22" cy="43" r="4" fill="none" stroke="#ffcc00" stroke-width="1"/>
+    <circle cx="58" cy="43" r="4" fill="none" stroke="#ffcc00" stroke-width="1"/>
+    <text x="40" y="18" text-anchor="middle" font-family="monospace" font-size="6" fill="#ff2040" opacity="0.6">88MPH</text>
+  </g>
+</svg>
