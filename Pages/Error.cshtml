@@ -1,0 +1,18 @@
+@page
+@model alive_85.Pages.ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<section class="error-section">
+  <div class="error-content">
+    <div class="error-code">404</div>
+    <div class="section-label">// System Error</div>
+    <h1 class="section-title">Game Over</h1>
+    <p class="section-desc" style="margin: 0 auto;">Something went wrong, or this page doesn't exist. The 80s are still alive &mdash; just not here.</p>
+    <div class="error-actions">
+      <a class="btn-primary" asp-page="/Index">Insert Coin to Continue</a>
+      <a class="btn-secondary" asp-page="/Shop/Index">Visit the Shop</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="400" fill="#05050a"/>
+  <!-- Crate box - 3D perspective -->
+  <polygon points="100,160 200,120 300,160 200,200" fill="none" stroke="#ffcc00" stroke-width="2" filter="url(#glow)"/>
+  <polygon points="100,160 100,280 200,320 200,200" fill="none" stroke="#ffcc00" stroke-width="2" filter="url(#glow)"/>
+  <polygon points="300,160 300,280 200,320 200,200" fill="none" stroke="#ffcc00" stroke-width="2" opacity="0.6" filter="url(#glow)"/>
+  <!-- "85" on front face -->
+  <text x="148" y="260" font-family="monospace" font-weight="bold" font-size="48" fill="none" stroke="#ff2040" stroke-width="1.5" filter="url(#glow)">85</text>
+  <!-- Star burst on top -->
+  <circle cx="200" cy="155" r="12" fill="none" stroke="#00ffde" stroke-width="1.5" filter="url(#glow)"/>
+  <line x1="200" y1="138" x2="200" y2="128" stroke="#00ffde" stroke-width="1.5" filter="url(#glow)"/>
+  <line x1="212" y1="143" x2="220" y2="136" stroke="#00ffde" stroke-width="1.5" filter="url(#glow)"/>
+  <line x1="188" y1="143" x2="180" y2="136" stroke="#00ffde" stroke-width="1.5" filter="url(#glow)"/>
+  <!-- Question marks floating around -->
+  <text x="80" y="140" font-family="monospace" font-size="20" fill="#4d4dff" opacity="0.5">?</text>
+  <text x="310" y="145" font-family="monospace" font-size="16" fill="#ffb8ff" opacity="0.4">?</text>
+  <text x="85" y="300" font-family="monospace" font-size="14" fill="#00ffde" opacity="0.3">?</text>
+  <text x="310" y="290" font-family="monospace" font-size="18" fill="#ffcc00" opacity="0.3">?</text>
+</svg>

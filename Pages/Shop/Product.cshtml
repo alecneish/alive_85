@@ -1,0 +1,54 @@
+@page "{id}"
+@model alive_85.Pages.Shop.ProductModel
+@{
+    ViewData["Title"] = Model.Product?.Name ?? "Product Not Found";
+}
+
+@if (Model.Product is null)
+{
+  <section class="product-detail-section" style="text-align:center;">
+    <h2 class="section-title">Product Not Found</h2>
+    <p class="section-desc" style="margin: 20px auto;">That item doesn't exist in our vault.</p>
+    <a class="btn-primary" asp-page="/Shop/Index">Back to Shop</a>
+  </section>
+}
+else
+{
+  <section class="product-detail-section">
+    <div class="product-detail">
+      <div class="product-detail-img">
+        @if (!string.IsNullOrEmpty(Model.Product.Tag))
+        {
+          <span class="product-tag">@Model.Product.Tag</span>
+        }
+        @if (!string.IsNullOrEmpty(Model.Product.ImagePath))
+        {
+          <img src="@Model.Product.ImagePath" alt="@Model.Product.Name" class="product-svg product-svg-detail" />
+        }
+        else
+        {
+          <span class="emoji-display">@Model.Product.Emoji</span>
+        }
+      </div>
+      <div class="product-detail-info">
+        <div class="section-label">// @(Model.Product.Tag ?? "Shop")</div>
+        <h1 class="product-detail-name">@Model.Product.Name</h1>
+        <div class="product-detail-price">
+          @Model.Product.Price.ToString("C")@if (!string.IsNullOrEmpty(Model.Product.PriceSuffix))
+          {<span class="price-suffix">@Model.Product.PriceSuffix</span>}
+        </div>
+        <p class="product-detail-desc">@Model.Product.DetailDescription</p>
+        <ul class="product-features">
+          @foreach (var feature in Model.Product.Features)
+          {
+            <li>@feature</li>
+          }
+        </ul>
+        <div class="product-detail-actions">
+          <button class="btn-add-cart" onclick="alert('Coming soon — the 80s are loading...')">Add to Cart</button>
+          <a class="btn-back" asp-page="/Shop/Index">&#x25C2; Back to Shop</a>
+        </div>
+      </div>
+    </div>
+  </section>
+}

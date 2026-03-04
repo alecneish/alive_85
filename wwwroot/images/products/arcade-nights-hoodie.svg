@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="400" fill="#05050a"/>
+  <!-- Hoodie silhouette -->
+  <path d="M130,130 L100,155 L70,145 L55,170 L90,195 L100,175 L100,320 L300,320 L300,175 L310,195 L345,170 L330,145 L300,155 L270,130"
+        fill="none" stroke="#39ff14" stroke-width="2" filter="url(#glow)"/>
+  <!-- Hood -->
+  <path d="M130,130 C150,100 170,85 200,80 C230,85 250,100 270,130" fill="none" stroke="#39ff14" stroke-width="2" filter="url(#glow)"/>
+  <!-- Hood opening -->
+  <ellipse cx="200" cy="130" rx="40" ry="15" fill="none" stroke="#39ff14" stroke-width="1.5" opacity="0.6"/>
+  <!-- Joystick emblem on chest -->
+  <circle cx="200" cy="220" r="30" fill="none" stroke="#ffcc00" stroke-width="1.5" filter="url(#glow)"/>
+  <rect x="195" y="200" width="10" height="25" rx="3" fill="none" stroke="#ffcc00" stroke-width="1.5"/>
+  <circle cx="200" cy="198" r="6" fill="none" stroke="#ff2040" stroke-width="1.5" filter="url(#glow)"/>
+  <!-- Pocket line -->
+  <path d="M150,265 Q200,285 250,265" fill="none" stroke="#39ff14" stroke-width="1" opacity="0.4"/>
+</svg>

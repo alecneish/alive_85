@@ -1,0 +1,54 @@
+@page "{slug}"
+@model alive_85.Pages.Explore.CategoryModel
+@{
+    ViewData["Title"] = Model.Category?.Name ?? "Not Found";
+}
+
+@if (Model.Category is null)
+{
+  <section class="explore-hero">
+    <div class="section-label">// Explore</div>
+    <h1 class="section-title">Category Not Found</h1>
+    <p class="section-desc" style="margin: 0 auto;">That corner of the 80s doesn't exist yet.</p>
+    <div style="margin-top: 30px;">
+      <a class="btn-primary" href="/#explore">Back to Explore</a>
+    </div>
+  </section>
+}
+else
+{
+  <section class="explore-hero">
+    <div class="explore-hero-icon">@Model.Category.Emoji</div>
+    <div class="section-label">// Explore / @Model.Category.Name</div>
+    <h1 class="section-title">@Model.Category.Name</h1>
+    <p class="explore-tagline">@Model.Category.Tagline</p>
+    <p class="section-desc" style="margin: 0 auto;">@Model.Category.Description</p>
+  </section>
+
+  <div class="explore-grid-section">
+    <div class="explore-grid">
+      @for (var i = 0; i < Model.Category.Items.Count; i++)
+      {
+        var item = Model.Category.Items[i];
+        <div class="explore-card">
+          <div class="explore-card-header">
+            <span class="explore-card-emoji">@item.Emoji</span>
+            <div class="explore-card-meta">
+              <span class="explore-card-year">@item.Year</span>
+              @if (!string.IsNullOrEmpty(item.Tag))
+              {
+                <span class="explore-card-tag">@item.Tag</span>
+              }
+            </div>
+          </div>
+          <h3 class="explore-card-title">@item.Title</h3>
+          <p class="explore-card-desc">@item.Description</p>
+        </div>
+      }
+    </div>
+
+    <div class="explore-back-bar">
+      <a class="btn-back" href="/#explore">&#x25C2; All Categories</a>
+    </div>
+  </div>
+}

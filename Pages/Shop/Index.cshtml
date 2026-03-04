@@ -1,0 +1,77 @@
+@page
+@model alive_85.Pages.Shop.IndexModel
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<section class="shop-page-hero">
+  <div class="section-label">// Full Collection</div>
+  <h2 class="section-title">The alive85 Shop</h2>
+  <p class="section-desc">Original designs inspired by the golden decade. Limited runs, maximum nostalgia. Every item ships with a piece of the 80s inside.</p>
+  <div class="shop-filters" id="shop-filters" role="group" aria-label="Filter products by category">
+    <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+    <button class="filter-btn" data-filter="New" aria-pressed="false">New</button>
+    <button class="filter-btn" data-filter="Hot" aria-pressed="false">Hot</button>
+    <button class="filter-btn" data-filter="Ltd" aria-pressed="false">Ltd</button>
+  </div>
+</section>
+
+<div class="shop-page-grid">
+  <div class="product-grid" id="product-grid">
+    @foreach (var product in Model.Products)
+    {
+      <a class="product-card" asp-page="/Shop/Product" asp-route-id="@product.Id" data-tag="@(product.Tag ?? "")">
+        <div class="product-img">
+          @if (!string.IsNullOrEmpty(product.Tag))
+          {
+            <span class="product-tag">@product.Tag</span>
+          }
+          @if (!string.IsNullOrEmpty(product.ImagePath))
+          {
+            <img src="@product.ImagePath" alt="@product.Name" class="product-svg" />
+          }
+          else
+          {
+            <span class="emoji-display">@product.Emoji</span>
+          }
+        </div>
+        <div class="product-info">
+          <div class="product-name">@product.Name</div>
+          <div class="product-desc">@product.Description</div>
+          <div class="product-price">
+            @product.Price.ToString("C")@if (!string.IsNullOrEmpty(product.PriceSuffix))
+            {<span class="price-suffix">@product.PriceSuffix</span>}
+          </div>
+        </div>
+      </a>
+    }
+  </div>
+</div>
+
+@section Scripts {
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  var cards = document.querySelectorAll('.product-card[data-tag]');
+
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      filterBtns.forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      var filter = btn.getAttribute('data-filter');
+
+      cards.forEach(function (card) {
+        var tag = card.getAttribute('data-tag');
+        if (filter === 'all' || tag === filter) {
+          card.style.display = '';
+          card.style.animation = 'fadeUp 0.3s ease-out both';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+</script>
+}

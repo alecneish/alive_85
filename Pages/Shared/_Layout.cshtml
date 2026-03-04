@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@ViewData["Title"] — alive85</title>
+  <meta name="description" content="@(ViewData["MetaDescription"] ?? "alive85 — The 80s never died. Shop retro gear, play daily trivia, and explore the decade that defined a generation.")">
+  <meta property="og:title" content="@ViewData["Title"] — alive85">
+  <meta property="og:description" content="@(ViewData["MetaDescription"] ?? "Shop retro gear, play daily trivia, and explore the decade that defined a generation.")">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="alive85">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="@ViewData["Title"] — alive85">
+  <meta name="twitter:description" content="@(ViewData["MetaDescription"] ?? "The 80s never died. Shop, play, and explore at alive85.")">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/svg+xml" href="~/favicon.svg">
+  <link rel="apple-touch-icon" href="~/icon-192.svg">
+  <link rel="manifest" href="~/manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+<a class="sr-only sr-only-focusable" href="#main-content">Skip to main content</a>
+
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-logo"><a asp-page="/Index">alive85</a></div>
+  <ul class="nav-links">
+    <li><a asp-page="/Shop/Index">Shop</a></li>
+    <li><a href="/#trivia">Trivia</a></li>
+    <li><a href="/#explore">Explore</a></li>
+    <li><a asp-page="/About/Index">About</a></li>
+  </ul>
+  <a class="nav-cta" asp-page="/Shop/Index">Shop Now</a>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-overlay" id="nav-mobile-overlay">
+  <a asp-page="/Index">Home</a>
+  <a asp-page="/Shop/Index">Shop</a>
+  <a href="/#trivia">Trivia</a>
+  <a asp-page="/Explore/Category" asp-route-slug="movies">Explore</a>
+  <a asp-page="/About/Index">About</a>
+  <a asp-page="/Contact/Index">Contact</a>
+</div>
+
+<main id="main-content">
+@RenderBody()
+</main>
+
+<footer role="contentinfo">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="nav-logo"><a asp-page="/Index">alive85</a></span>
+      <div class="footer-tagline">The 80s never died. We're proof.</div>
+    </div>
+    <div class="footer-links-group">
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a asp-page="/Shop/Index">New Arrivals</a>
+        <a asp-page="/Shop/Index">The 85 Crate</a>
+        <a asp-page="/Shop/Index">Apparel</a>
+        <a asp-page="/Shop/Index">Posters &amp; Art</a>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a asp-page="/Explore/Category" asp-route-slug="movies">Movies</a>
+        <a asp-page="/Explore/Category" asp-route-slug="music">Music</a>
+        <a asp-page="/Explore/Category" asp-route-slug="gaming">Gaming</a>
+        <a asp-page="/Explore/Category" asp-route-slug="fashion">Fashion</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a asp-page="/About/Index">About</a>
+        <a asp-page="/Contact/Index">Contact</a>
+        <a asp-page="/About/Index">Careers</a>
+        <a asp-page="/About/Index">Press</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2025 alive85. All rights reserved. Built with chrome and code.</div>
+</footer>
+
+<script src="~/js/site.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

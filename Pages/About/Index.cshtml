@@ -1,0 +1,31 @@
+@page
+@model alive_85.Pages.About.IndexModel
+@{
+    ViewData["Title"] = "About";
+}
+
+<section class="about-section">
+  <div class="about-container">
+    <div class="about-photo-col">
+      <div class="about-photo-frame">
+        <img src="~/images/founder.png" alt="Founder of alive85" class="about-photo" />
+        <div class="about-photo-scanlines"></div>
+      </div>
+      <div class="about-photo-label">// The Founder</div>
+    </div>
+    <div class="about-text-col">
+      <div class="section-label">// About alive85</div>
+      <h1 class="section-title">Born 20 Years<br>Too Late</h1>
+      <div class="about-body">
+        <p>Built by a college kid who was born 20 years too late. Growing up hearing stories about the 80s &mdash; the music, the movies, the way people actually lived &mdash; he wanted to bring the magic of the 80s back to the future (no pun intended).</p>
+        <p>alive85 is part store, part time machine. Through collector's items, curated 80s movies, music, and daily trivia, we're here to give you a trip down memory lane &mdash; or an introduction to the decade you missed.</p>
+        <p>Everything we sell is designed to help you rewind, unplug, and be present.</p>
+        <p class="about-cta-line">Put the phone down. Go make some memories.</p>
+      </div>
+      <div class="about-actions">
+        <a class="btn-primary" asp-page="/Shop/Index">Shop the Era</a>
+        <a class="btn-secondary" href="/">Back to Home</a>
+      </div>
+    </div>
+  </div>
+</section>
