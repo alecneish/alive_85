@@ -16,6 +16,19 @@
   --surface: #05050a;
   --surface-light: #0a0a14;
   --grid-color: rgba(33, 33, 222, 0.18);
+
+  --coral: #ff6b6b;
+  --coral-glow: rgba(255, 107, 107, 0.4);
+  --warm-gold: #d4a843;
+  --warm-gold-glow: rgba(212, 168, 67, 0.4);
+  --hot-pink: #ff2d95;
+  --hot-pink-glow: rgba(255, 45, 149, 0.4);
+  --lcd-green: #8bac0f;
+  --lcd-green-dark: #306230;
+  --cream: #f0e6d3;
+  --chrome-border: 3px solid rgba(255, 204, 0, 0.25);
+  --panel-border: 3px solid rgba(77, 77, 255, 0.3);
+  --surface-alt: #0a0a1a;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,7 +40,7 @@ body {
   overflow-x: hidden;
 }
 
-/* CRT scanline overlay */
+/* CRT scanline overlay — tighter, more visible */
 body::after {
   content: '';
   position: fixed;
@@ -35,20 +48,21 @@ body::after {
   background: repeating-linear-gradient(
     0deg,
     transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.12) 2px,
-    rgba(0, 0, 0, 0.12) 4px
+    transparent 1px,
+    rgba(0, 0, 0, 0.15) 1px,
+    rgba(0, 0, 0, 0.15) 3px
   );
   pointer-events: none;
   z-index: 9999;
 }
 
-/* CRT vignette + slight screen curvature feel */
+/* CRT vignette with subtle RGB fringe */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.55) 100%);
+  background:
+    radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.6) 100%);
   pointer-events: none;
   z-index: 9998;
 }
@@ -83,17 +97,31 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-/* ── Navigation ── */
+/* ── Navigation — Retro Status Bar ── */
 
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 18px 40px;
-  background: rgba(0, 0, 0, 0.92);
+  padding: 0 40px;
+  height: 64px;
+  background: rgba(5, 5, 10, 0.96);
   backdrop-filter: blur(12px);
-  border-bottom: 3px solid var(--maze-blue);
-  box-shadow: 0 2px 20px var(--maze-blue-glow);
+  border-bottom: 3px solid var(--pac-yellow);
+  box-shadow:
+    0 3px 0 0 rgba(255, 204, 0, 0.08),
+    0 4px 30px rgba(255, 204, 0, 0.06);
 }
+
+.nav-pixel-dots {
+  display: flex; gap: 6px; align-items: center;
+}
+.nav-pixel-dots span {
+  width: 8px; height: 8px;
+  display: block;
+}
+.nav-pixel-dots span:nth-child(1) { background: var(--ghost-red); box-shadow: 0 0 6px rgba(255,0,0,0.5); }
+.nav-pixel-dots span:nth-child(2) { background: var(--pac-yellow); box-shadow: 0 0 6px var(--pac-yellow-glow); }
+.nav-pixel-dots span:nth-child(3) { background: var(--acid-green); box-shadow: 0 0 6px rgba(57,255,20,0.5); }
 
 .nav-logo {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 1.2rem;
@@ -106,23 +134,27 @@ nav {
 
 .nav-links a {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.55rem;
-  color: var(--maze-blue-bright); text-decoration: none; text-transform: uppercase;
+  color: var(--cream); text-decoration: none; text-transform: uppercase;
   letter-spacing: 2px; transition: all 0.3s;
+  opacity: 0.7;
 }
 .nav-links a:hover {
-  color: var(--pac-yellow);
+  color: var(--pac-yellow); opacity: 1;
   text-shadow: 0 0 10px var(--pac-yellow-glow);
 }
 
 .nav-cta {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.55rem;
-  padding: 10px 20px; background: transparent; border: 2px solid var(--pac-yellow);
+  padding: 10px 20px; background: transparent;
+  border: 3px solid var(--pac-yellow);
   color: var(--pac-yellow); text-transform: uppercase; letter-spacing: 2px;
   cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block;
+  box-shadow: 3px 3px 0 0 rgba(255, 204, 0, 0.3);
 }
 .nav-cta:hover {
   background: var(--pac-yellow); color: var(--void);
-  box-shadow: 0 0 25px var(--pac-yellow-glow);
+  box-shadow: 0 0 25px var(--pac-yellow-glow), 3px 3px 0 0 rgba(255,204,0,0.5);
+  transform: translate(-1px, -1px);
 }
 
 /* ── Hero ── */
@@ -131,16 +163,38 @@ nav {
   position: relative; min-height: 100vh; display: flex; flex-direction: column;
   justify-content: center; align-items: center; text-align: center;
   padding: 120px 20px 60px; overflow: hidden;
-  background: var(--void);
+  background: linear-gradient(180deg, #020010 0%, #050520 40%, #0a0a30 70%, #150825 100%);
+}
+
+/* Neon horizon glow line (Lost in Space inspired) */
+.hero-horizon {
+  position: absolute;
+  bottom: 28%;
+  left: -10%; right: -10%;
+  height: 4px;
+  background: var(--hot-pink);
+  box-shadow:
+    0 0 20px var(--hot-pink),
+    0 0 60px var(--hot-pink-glow),
+    0 0 120px rgba(255, 45, 149, 0.15);
+  z-index: 3;
+  opacity: 0.9;
+}
+.hero-horizon::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(0deg, rgba(255, 45, 149, 0.08), transparent);
 }
 
 .grid-floor {
   position: absolute; bottom: -10%; left: -20%; right: -20%; height: 55%;
   background:
-    linear-gradient(90deg, var(--maze-blue) 2px, transparent 2px),
-    linear-gradient(0deg, var(--maze-blue) 2px, transparent 2px);
+    linear-gradient(90deg, var(--hot-pink) 1px, transparent 1px),
+    linear-gradient(0deg, var(--hot-pink) 1px, transparent 1px);
   background-size: 60px 60px;
-  opacity: 0.15;
+  opacity: 0.2;
   transform: perspective(400px) rotateX(60deg); transform-origin: center bottom;
   animation: gridScroll 3s linear infinite;
 }
@@ -149,13 +203,13 @@ nav {
 .chrome-ring {
   position: absolute; bottom: 22%; left: 50%; transform: translateX(-50%);
   width: 320px; height: 320px; border-radius: 50%;
-  border: 3px solid rgba(33, 33, 222, 0.25);
-  box-shadow: 0 0 80px var(--maze-blue-glow), inset 0 0 80px rgba(33, 33, 222, 0.08);
+  border: 2px solid rgba(255, 45, 149, 0.2);
+  box-shadow: 0 0 80px var(--hot-pink-glow), inset 0 0 80px rgba(255, 45, 149, 0.05);
   animation: ringPulse 4s ease-in-out infinite;
 }
 .chrome-ring::before {
   content: ''; position: absolute; inset: 20px; border-radius: 50%;
-  border: 2px solid rgba(33, 33, 222, 0.12);
+  border: 2px solid rgba(255, 45, 149, 0.1);
 }
 .chrome-ring::after {
   content: ''; position: absolute; inset: 45px; border-radius: 50%;
@@ -164,127 +218,230 @@ nav {
 }
 @keyframes ringPulse { 0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); } 50% { opacity: 1; transform: translateX(-50%) scale(1.02); } }
 
+/* Mountain silhouette — coral-tinted (Lost in Space) */
 .skyline { position: absolute; bottom: 16%; left: -5%; right: -5%; height: 200px; z-index: 2; }
 .skyline svg { width: 110%; height: 100%; position: absolute; bottom: -2px; }
+.skyline polygon { fill: #1a0a15; }
+
+/* Hero glow behind title */
+.hero-title-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -60%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(255, 204, 0, 0.06) 0%, rgba(255, 45, 149, 0.03) 40%, transparent 70%);
+  z-index: 3;
+  pointer-events: none;
+}
 
 .hero-badge {
-  font-family: 'Press Start 2P', monospace; font-size: 0.6rem; color: var(--ghost-cyan);
-  letter-spacing: 4px; text-transform: uppercase; margin-bottom: 28px; z-index: 5;
+  font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--ghost-cyan);
+  letter-spacing: 6px; text-transform: uppercase; margin-bottom: 28px; z-index: 5;
   animation: flickerIn 0.8s ease-out both;
   text-shadow: 0 0 12px rgba(0, 255, 222, 0.6);
+  border: 1px solid rgba(0, 255, 222, 0.2);
+  padding: 8px 20px;
+  background: rgba(0, 255, 222, 0.03);
 }
 
 .hero h1 {
   font-family: 'Orbitron', sans-serif; font-weight: 900;
-  font-size: clamp(4rem, 12vw, 9rem); line-height: 0.95;
-  text-transform: uppercase; letter-spacing: 6px; z-index: 5;
+  font-size: clamp(4.5rem, 14vw, 10rem); line-height: 0.95;
+  text-transform: uppercase; letter-spacing: 8px; z-index: 5;
   animation: titleIn 1s ease-out 0.3s both;
 }
 .hero h1 .line1 {
   display: block; color: var(--pac-yellow);
   text-shadow:
     0 0 40px var(--pac-yellow-glow),
-    0 0 80px rgba(255, 204, 0, 0.15),
-    0 4px 0 #b38f00;
-  -webkit-text-stroke: 1px rgba(255, 180, 0, 0.3);
+    0 0 80px rgba(255, 204, 0, 0.2),
+    0 4px 0 #b38f00,
+    0 6px 0 #8a6d00;
+  -webkit-text-stroke: 2px rgba(255, 180, 0, 0.25);
 }
 .hero h1 .line2 {
-  display: block; font-size: 0.45em; color: var(--maze-blue-bright);
-  letter-spacing: 16px;
-  text-shadow: 0 0 20px var(--maze-blue-glow);
+  display: block; font-size: 0.4em; color: var(--cream);
+  letter-spacing: 18px;
+  text-shadow: 0 0 30px rgba(255, 45, 149, 0.3), 0 0 60px rgba(255, 45, 149, 0.1);
+  -webkit-text-stroke: 1px rgba(255, 45, 149, 0.15);
+  opacity: 0.9;
 }
 
 .hero-sub {
   font-family: 'Press Start 2P', monospace;
-  font-weight: 400; font-size: 0.65rem; color: rgba(255, 184, 255, 0.6);
-  margin-top: 28px; letter-spacing: 4px; text-transform: uppercase;
+  font-weight: 400; font-size: 0.6rem; color: var(--ghost-pink);
+  margin-top: 28px; letter-spacing: 5px; text-transform: uppercase;
   z-index: 5; animation: fadeUp 0.8s ease-out 0.6s both;
+  opacity: 0.7;
 }
 
 .hero-buttons { display: flex; gap: 20px; margin-top: 44px; z-index: 5; animation: fadeUp 0.8s ease-out 0.8s both; }
 
+/* ── Buttons — Chunky 3D Pixel Style ── */
+
 .btn-primary {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.7rem;
-  padding: 18px 36px; background: var(--pac-yellow); border: none; color: var(--void);
+  padding: 18px 36px; background: var(--pac-yellow); border: 3px solid #b38f00;
+  color: var(--void);
   text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
-  transition: all 0.3s; text-decoration: none; display: inline-block;
-  box-shadow: 0 0 20px var(--pac-yellow-glow);
+  transition: all 0.15s; text-decoration: none; display: inline-block;
+  box-shadow:
+    4px 4px 0 0 #b38f00,
+    0 0 20px var(--pac-yellow-glow);
+  position: relative;
 }
 .btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 40px var(--pac-yellow-glow), 0 0 60px rgba(255, 204, 0, 0.2);
+  transform: translate(-2px, -2px);
+  box-shadow:
+    6px 6px 0 0 #b38f00,
+    0 0 40px var(--pac-yellow-glow),
+    0 0 60px rgba(255, 204, 0, 0.15);
+}
+.btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow:
+    1px 1px 0 0 #b38f00,
+    0 0 15px var(--pac-yellow-glow);
 }
 
 .btn-secondary {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.7rem;
-  padding: 18px 36px; background: transparent; border: 2px solid var(--maze-blue-bright);
-  color: var(--maze-blue-bright); text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
-  transition: all 0.3s; text-decoration: none; display: inline-block;
+  padding: 18px 36px; background: transparent;
+  border: 3px solid var(--hot-pink);
+  color: var(--hot-pink); text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
+  transition: all 0.15s; text-decoration: none; display: inline-block;
+  box-shadow: 4px 4px 0 0 rgba(255, 45, 149, 0.4);
 }
 .btn-secondary:hover {
-  border-color: var(--ghost-pink); color: var(--ghost-pink);
-  box-shadow: 0 0 25px rgba(255, 184, 255, 0.2);
-  text-shadow: 0 0 8px rgba(255, 184, 255, 0.4);
+  background: rgba(255, 45, 149, 0.08);
+  transform: translate(-2px, -2px);
+  box-shadow:
+    6px 6px 0 0 rgba(255, 45, 149, 0.4),
+    0 0 30px rgba(255, 45, 149, 0.15);
+  text-shadow: 0 0 8px var(--hot-pink-glow);
+}
+.btn-secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 rgba(255, 45, 149, 0.3);
 }
 
-/* ── Ticker ── */
+/* ── Ticker — Bold Gold Banner ── */
 
 .ticker-bar {
-  background: var(--surface); padding: 14px 0;
-  border-top: 2px solid var(--maze-blue);
-  border-bottom: 2px solid var(--maze-blue);
-  box-shadow: inset 0 0 30px rgba(33, 33, 222, 0.08);
+  background: var(--pac-yellow); padding: 12px 0;
+  border-top: 4px solid #b38f00;
+  border-bottom: 4px solid #b38f00;
   overflow: hidden; position: relative; z-index: 10;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.2),
+    0 4px 20px rgba(255, 204, 0, 0.15);
 }
 .ticker-inner { display: flex; white-space: nowrap; animation: ticker 22s linear infinite; }
 .ticker-inner span {
-  font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
-  color: var(--ghost-cyan); letter-spacing: 2px; padding: 0 40px; text-transform: uppercase;
+  font-family: 'Press Start 2P', monospace; font-size: 0.55rem;
+  color: var(--void); letter-spacing: 2px; padding: 0 30px; text-transform: uppercase;
+  font-weight: 400;
 }
-.ticker-inner .highlight { color: var(--pac-yellow); text-shadow: 0 0 8px var(--pac-yellow-glow); }
+.ticker-inner .highlight {
+  color: #8a1010;
+  text-shadow: none;
+}
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* ── Sections ── */
+/* ── Sections — Retro Window Chrome ── */
 
 section { position: relative; padding: 100px 40px; }
 
+/* Section vertical label (ThreeSixtyEight / Mochi) */
+.section-vlabel {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: rotate(-90deg) translateX(-50%);
+  transform-origin: left center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.4rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255, 204, 0, 0.15);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .section-label {
-  font-family: 'Press Start 2P', monospace; font-size: 0.55rem;
-  color: var(--pac-yellow); letter-spacing: 4px; text-transform: uppercase;
-  margin-bottom: 12px;
-  text-shadow: 0 0 8px var(--pac-yellow-glow);
+  font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
+  color: var(--warm-gold); letter-spacing: 6px; text-transform: uppercase;
+  margin-bottom: 16px;
+  text-shadow: 0 0 8px var(--warm-gold-glow);
 }
 .section-title {
   font-family: 'Orbitron', sans-serif; font-weight: 900;
-  font-size: clamp(2rem, 5vw, 3.5rem); text-transform: uppercase;
-  letter-spacing: 3px; margin-bottom: 16px; color: #fff;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  font-size: clamp(2.2rem, 5vw, 3.8rem); text-transform: uppercase;
+  letter-spacing: 4px; margin-bottom: 16px; color: #fff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.06);
 }
 .section-desc {
-  font-weight: 300; font-size: 1.15rem; color: rgba(140, 140, 255, 0.75);
+  font-weight: 300; font-size: 1.15rem; color: rgba(200, 200, 255, 0.65);
   max-width: 550px; line-height: 1.6; letter-spacing: 0.5px;
 }
 
-/* ── Shop ── */
+/* ── Shop Section — Framed Panel ── */
 
 .shop-section {
-  background: var(--surface);
-  border-top: 1px solid rgba(33, 33, 222, 0.1);
+  background: var(--surface-alt);
+  border-top: 3px solid rgba(255, 204, 0, 0.15);
+  border-bottom: 3px solid rgba(255, 204, 0, 0.15);
+  position: relative;
+}
+.shop-section::before {
+  content: '[ SHOP ]';
+  position: absolute;
+  top: -1px; left: 50%; transform: translateX(-50%);
+  font-family: 'Press Start 2P', monospace; font-size: 0.4rem;
+  color: var(--pac-yellow);
+  background: var(--surface-alt);
+  padding: 0 16px;
+  letter-spacing: 3px;
+  z-index: 2;
+  margin-top: -6px;
 }
 .shop-header { text-align: center; margin-bottom: 60px; }
 .shop-header .section-desc { margin: 0 auto; }
 
 .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
 
+/* ── Product Cards — Retro Window Panels ── */
+
 .product-card {
-  background: var(--surface-light); border: 2px solid rgba(33, 33, 222, 0.15);
-  overflow: hidden; transition: all 0.4s; cursor: pointer;
+  background: var(--surface-light);
+  border: 3px solid rgba(77, 77, 255, 0.2);
+  overflow: hidden; transition: all 0.3s; cursor: pointer;
   text-decoration: none; display: block;
+  position: relative;
 }
+.product-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 4px;
+  z-index: 3;
+}
+.product-card:nth-child(1)::before { background: var(--hot-pink); box-shadow: 0 0 10px var(--hot-pink-glow); }
+.product-card:nth-child(2)::before { background: var(--ghost-cyan); box-shadow: 0 0 10px rgba(0,255,222,0.4); }
+.product-card:nth-child(3)::before { background: var(--acid-green); box-shadow: 0 0 10px rgba(57,255,20,0.4); }
+.product-card:nth-child(4)::before { background: var(--warm-gold); box-shadow: 0 0 10px var(--warm-gold-glow); }
+.product-card:nth-child(5)::before { background: var(--coral); box-shadow: 0 0 10px var(--coral-glow); }
+.product-card:nth-child(6)::before { background: var(--ghost-orange); box-shadow: 0 0 10px rgba(255,184,82,0.4); }
+.product-card:nth-child(7)::before { background: var(--pac-yellow); box-shadow: 0 0 10px var(--pac-yellow-glow); }
+.product-card:nth-child(8)::before { background: var(--maze-blue-bright); box-shadow: 0 0 10px var(--maze-blue-glow); }
+
 .product-card:hover {
   border-color: var(--pac-yellow);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 40px var(--pac-yellow-glow), 0 0 60px rgba(255, 204, 0, 0.05);
+  transform: translateY(-6px);
+  box-shadow:
+    0 8px 0 -3px rgba(255, 204, 0, 0.1),
+    0 12px 40px rgba(255, 204, 0, 0.08),
+    0 0 60px rgba(255, 204, 0, 0.04);
 }
 
 .product-img {
@@ -293,44 +450,36 @@ section { position: relative; padding: 100px 40px; }
   background: var(--void);
 }
 .product-card:nth-child(1) .product-img {
-  background: linear-gradient(160deg, #000 30%, #0a0a2e 70%, #1a0a3e);
-  box-shadow: inset 0 -40px 80px rgba(77, 109, 255, 0.06);
+  background: linear-gradient(160deg, #050515 30%, #150525 70%, #200a35);
 }
 .product-card:nth-child(2) .product-img {
-  background: linear-gradient(160deg, #000 30%, #1a0020 70%, #2a0040);
-  box-shadow: inset 0 -40px 80px rgba(233, 48, 168, 0.06);
+  background: linear-gradient(160deg, #050515 30%, #1a0020 70%, #2a0040);
 }
 .product-card:nth-child(3) .product-img {
-  background: linear-gradient(160deg, #000 30%, #001a10 70%, #002a18);
-  box-shadow: inset 0 -40px 80px rgba(57, 255, 20, 0.04);
+  background: linear-gradient(160deg, #050515 30%, #001a10 70%, #002a18);
 }
 .product-card:nth-child(4) .product-img {
-  background: linear-gradient(160deg, #000 30%, #1a1000 70%, #2a1a00);
-  box-shadow: inset 0 -40px 80px rgba(255, 184, 82, 0.06);
+  background: linear-gradient(160deg, #050515 30%, #1a1000 70%, #2a1a00);
 }
 .product-card:nth-child(5) .product-img {
-  background: linear-gradient(160deg, #000 30%, #0e0020 70%, #1a0040);
-  box-shadow: inset 0 -40px 80px rgba(255, 184, 255, 0.04);
+  background: linear-gradient(160deg, #050515 30%, #1a0a0a 70%, #2a1010);
 }
 .product-card:nth-child(6) .product-img {
-  background: linear-gradient(160deg, #000 30%, #001a1a 70%, #002a2a);
-  box-shadow: inset 0 -40px 80px rgba(0, 255, 222, 0.04);
+  background: linear-gradient(160deg, #050515 30%, #001a1a 70%, #002a2a);
 }
 .product-card:nth-child(7) .product-img {
-  background: linear-gradient(160deg, #000 30%, #1a0a00 70%, #2a1500);
-  box-shadow: inset 0 -40px 80px rgba(255, 204, 0, 0.06);
+  background: linear-gradient(160deg, #050515 30%, #1a0a00 70%, #2a1500);
 }
 .product-card:nth-child(8) .product-img {
-  background: linear-gradient(160deg, #000 30%, #00101a 70%, #001a2a);
-  box-shadow: inset 0 -40px 80px rgba(77, 109, 255, 0.04);
+  background: linear-gradient(160deg, #050515 30%, #00101a 70%, #001a2a);
 }
 
 .product-img::after {
   content: '';
   position: absolute; inset: 0;
   background:
-    radial-gradient(circle at 50% 80%, rgba(33, 33, 222, 0.08) 0%, transparent 60%),
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    radial-gradient(circle at 50% 80%, rgba(255, 45, 149, 0.05) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
   pointer-events: none;
 }
 .product-img .emoji-display { font-size: 6rem; z-index: 2; filter: drop-shadow(0 0 20px rgba(255,204,0,0.2)); }
@@ -348,108 +497,215 @@ section { position: relative; padding: 100px 40px; }
   position: absolute; top: 14px; left: 14px;
   font-family: 'Press Start 2P', monospace; font-size: 0.45rem;
   background: var(--ghost-red); color: #fff; padding: 6px 10px; letter-spacing: 1px;
-  box-shadow: 0 0 12px rgba(255, 0, 0, 0.4);
+  box-shadow: 3px 3px 0 0 rgba(255, 0, 0, 0.3);
+  z-index: 4;
 }
-.product-info { padding: 20px; border-top: 1px solid rgba(33, 33, 222, 0.1); }
+.product-info {
+  padding: 20px;
+  border-top: 2px solid rgba(77, 77, 255, 0.1);
+  background: rgba(5, 5, 20, 0.5);
+}
 .product-name {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.65rem;
   letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; color: #fff;
 }
-.product-desc { font-weight: 300; font-size: 0.9rem; color: rgba(140, 140, 255, 0.7); margin-bottom: 14px; }
+.product-desc { font-weight: 300; font-size: 0.9rem; color: rgba(200, 200, 255, 0.6); margin-bottom: 14px; }
 .product-price {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.8rem;
   color: var(--pac-yellow);
   text-shadow: 0 0 8px var(--pac-yellow-glow);
 }
-.product-price .price-suffix { font-size: 0.7em; color: rgba(140, 140, 255, 0.6); text-shadow: none; }
+.product-price .price-suffix { font-size: 0.7em; color: rgba(200, 200, 255, 0.5); text-shadow: none; }
 
-/* ── Trivia ── */
+/* ── Trivia — Retro Terminal / LCD ── */
 
-.trivia-section { background: var(--void); text-align: center; }
+.trivia-section {
+  background: var(--void); text-align: center;
+  border-top: 3px solid rgba(139, 172, 15, 0.2);
+  border-bottom: 3px solid rgba(139, 172, 15, 0.2);
+}
+.trivia-section::before {
+  content: '[ TRIVIA ]';
+  position: absolute;
+  top: -1px; left: 50%; transform: translateX(-50%);
+  font-family: 'Press Start 2P', monospace; font-size: 0.4rem;
+  color: var(--lcd-green);
+  background: var(--void);
+  padding: 0 16px;
+  letter-spacing: 3px;
+  z-index: 2;
+  margin-top: -6px;
+}
 .trivia-card {
-  max-width: 700px; margin: 50px auto 0; background: var(--surface);
-  border: 2px solid var(--maze-blue); padding: 50px 40px; position: relative;
-  box-shadow: 0 0 40px rgba(33, 33, 222, 0.1);
+  max-width: 700px; margin: 50px auto 0;
+  background: linear-gradient(160deg, #0a120a, #081008);
+  border: 3px solid rgba(139, 172, 15, 0.3);
+  padding: 50px 40px; position: relative;
+  box-shadow:
+    0 0 40px rgba(139, 172, 15, 0.06),
+    inset 0 0 60px rgba(139, 172, 15, 0.02);
 }
 .trivia-card::before {
   content: '?'; position: absolute; top: -30px; right: 30px;
   font-family: 'Press Start 2P', monospace; font-size: 4rem; font-weight: 400;
-  color: rgba(255, 204, 0, 0.06);
+  color: rgba(139, 172, 15, 0.06);
 }
+/* LCD scanlines for trivia */
+.trivia-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(139, 172, 15, 0.03) 1px,
+    rgba(139, 172, 15, 0.03) 2px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+.trivia-card > * { position: relative; z-index: 1; }
+
 .trivia-question {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.75rem;
-  letter-spacing: 1px; line-height: 2.2; margin-bottom: 30px; color: #fff;
+  letter-spacing: 1px; line-height: 2.2; margin-bottom: 30px;
+  color: var(--lcd-green);
+  text-shadow: 0 0 6px rgba(139, 172, 15, 0.4);
 }
 
 .trivia-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
 .trivia-btn {
-  font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.65rem;
-  padding: 16px 20px; background: rgba(33, 33, 222, 0.06);
-  border: 2px solid rgba(33, 33, 222, 0.25); color: var(--maze-blue-bright);
-  cursor: pointer; letter-spacing: 1px; transition: all 0.3s;
+  font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.6rem;
+  padding: 16px 20px;
+  background: rgba(139, 172, 15, 0.06);
+  border: 3px solid rgba(139, 172, 15, 0.25);
+  color: var(--lcd-green);
+  cursor: pointer; letter-spacing: 1px; transition: all 0.15s;
+  border-radius: 4px;
+  box-shadow: 3px 3px 0 0 rgba(139, 172, 15, 0.15);
 }
 .trivia-btn:hover {
   border-color: var(--pac-yellow); background: rgba(255, 204, 0, 0.06);
   color: var(--pac-yellow); text-shadow: 0 0 8px var(--pac-yellow-glow);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 rgba(255, 204, 0, 0.2);
+}
+.trivia-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 rgba(139, 172, 15, 0.1);
 }
 .trivia-btn.correct {
   border-color: var(--acid-green); background: rgba(57, 255, 20, 0.08);
   color: var(--acid-green); text-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
-  box-shadow: 0 0 20px rgba(57, 255, 20, 0.15);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.15), 3px 3px 0 0 rgba(57,255,20,0.2);
 }
 .trivia-btn.wrong {
   border-color: var(--ghost-red); color: var(--ghost-red);
   text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+  box-shadow: 3px 3px 0 0 rgba(255,0,0,0.15);
 }
 .trivia-footer {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.5rem; color: rgba(140, 140, 255, 0.6); letter-spacing: 1px;
+  font-size: 0.5rem; color: rgba(139, 172, 15, 0.5); letter-spacing: 1px;
 }
 
-/* ── Categories ── */
+/* ── Categories — Bold Color Blocks ── */
 
 .categories-section {
-  background: var(--surface);
-  border-top: 1px solid rgba(33, 33, 222, 0.1);
+  background: var(--surface-alt);
+  border-top: 3px solid rgba(255, 204, 0, 0.15);
 }
+.categories-section::before {
+  content: '[ EXPLORE ]';
+  position: absolute;
+  top: -1px; left: 50%; transform: translateX(-50%);
+  font-family: 'Press Start 2P', monospace; font-size: 0.4rem;
+  color: var(--pac-yellow);
+  background: var(--surface-alt);
+  padding: 0 16px;
+  letter-spacing: 3px;
+  z-index: 2;
+  margin-top: -6px;
+}
+
 .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 1200px; margin: 50px auto 0; }
 .cat-card {
-  padding: 36px 28px; border: 2px solid rgba(33, 33, 222, 0.15);
-  background: var(--surface-light); transition: all 0.4s; cursor: pointer;
+  padding: 36px 28px;
+  border: 3px solid rgba(77, 77, 255, 0.2);
+  transition: all 0.3s; cursor: pointer;
   position: relative; overflow: hidden;
 }
-.cat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; transition: height 0.4s; }
+
+.cat-card:nth-child(1) {
+  background: linear-gradient(135deg, #1a0505 0%, #2a0808 100%);
+  border-color: rgba(255, 0, 0, 0.2);
+}
+.cat-card:nth-child(2) {
+  background: linear-gradient(135deg, #150520 0%, #200835 100%);
+  border-color: rgba(255, 184, 255, 0.2);
+}
+.cat-card:nth-child(3) {
+  background: linear-gradient(135deg, #051510 0%, #082a1a 100%);
+  border-color: rgba(0, 255, 222, 0.2);
+}
+.cat-card:nth-child(4) {
+  background: linear-gradient(135deg, #151005 0%, #2a1a08 100%);
+  border-color: rgba(255, 184, 82, 0.2);
+}
+.cat-card:nth-child(5) {
+  background: linear-gradient(135deg, #0a1505 0%, #102a08 100%);
+  border-color: rgba(57, 255, 20, 0.2);
+}
+
+.cat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 4px; transition: box-shadow 0.3s;
+}
 .cat-card:nth-child(1)::before { background: var(--ghost-red); }
 .cat-card:nth-child(2)::before { background: var(--ghost-pink); }
 .cat-card:nth-child(3)::before { background: var(--ghost-cyan); }
 .cat-card:nth-child(4)::before { background: var(--ghost-orange); }
 .cat-card:nth-child(5)::before { background: var(--acid-green); }
-.cat-card:hover::before { height: 100%; }
 
-.cat-card:nth-child(1):hover { border-color: var(--ghost-red); box-shadow: 0 0 25px rgba(255, 0, 0, 0.15); }
-.cat-card:nth-child(2):hover { border-color: var(--ghost-pink); box-shadow: 0 0 25px rgba(255, 184, 255, 0.15); }
-.cat-card:nth-child(3):hover { border-color: var(--ghost-cyan); box-shadow: 0 0 25px rgba(0, 255, 222, 0.15); }
-.cat-card:nth-child(4):hover { border-color: var(--ghost-orange); box-shadow: 0 0 25px rgba(255, 184, 82, 0.15); }
-.cat-card:nth-child(5):hover { border-color: var(--acid-green); box-shadow: 0 0 25px rgba(57, 255, 20, 0.15); }
+.cat-card:nth-child(1):hover { border-color: var(--ghost-red); box-shadow: 0 0 30px rgba(255, 0, 0, 0.15), 4px 4px 0 0 rgba(255,0,0,0.2); }
+.cat-card:nth-child(2):hover { border-color: var(--ghost-pink); box-shadow: 0 0 30px rgba(255, 184, 255, 0.15), 4px 4px 0 0 rgba(255,184,255,0.2); }
+.cat-card:nth-child(3):hover { border-color: var(--ghost-cyan); box-shadow: 0 0 30px rgba(0, 255, 222, 0.15), 4px 4px 0 0 rgba(0,255,222,0.2); }
+.cat-card:nth-child(4):hover { border-color: var(--ghost-orange); box-shadow: 0 0 30px rgba(255, 184, 82, 0.15), 4px 4px 0 0 rgba(255,184,82,0.2); }
+.cat-card:nth-child(5):hover { border-color: var(--acid-green); box-shadow: 0 0 30px rgba(57, 255, 20, 0.15), 4px 4px 0 0 rgba(57,255,20,0.2); }
 
-.cat-card:hover { transform: translateY(-3px); }
-.cat-icon { font-size: 2.6rem; margin-bottom: 18px; display: block; }
+.cat-card:hover { transform: translate(-2px, -4px); }
+.cat-icon { font-size: 3rem; margin-bottom: 18px; display: block; filter: drop-shadow(0 0 12px rgba(255,204,0,0.15)); }
 .cat-name {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.65rem;
   letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; color: #fff;
 }
-.cat-count { font-weight: 300; font-size: 0.85rem; color: rgba(140, 140, 255, 0.65); letter-spacing: 1px; }
+.cat-count { font-weight: 300; font-size: 0.85rem; color: rgba(200, 200, 255, 0.55); letter-spacing: 1px; }
 
-/* ── CTA ── */
+/* Starburst badge (Letterista inspired) */
+.cat-badge {
+  position: absolute; top: 12px; right: 12px;
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Press Start 2P', monospace; font-size: 0.35rem;
+  color: var(--void); letter-spacing: 0;
+  background: var(--pac-yellow);
+  clip-path: polygon(50% 0%, 61% 17%, 80% 8%, 76% 30%, 98% 35%, 82% 50%, 98% 65%, 76% 70%, 80% 92%, 61% 83%, 50% 100%, 39% 83%, 20% 92%, 24% 70%, 2% 65%, 18% 50%, 2% 35%, 24% 30%, 20% 8%, 39% 17%);
+  box-shadow: 0 0 10px var(--pac-yellow-glow);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* ── CTA — Newsletter ── */
 
 .cta-section {
   background: var(--void); text-align: center; padding: 120px 40px;
   position: relative; overflow: hidden;
+  border-top: 3px solid rgba(255, 45, 149, 0.15);
 }
 .cta-section::before {
   content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: 500px; height: 500px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(33, 33, 222, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 45, 149, 0.04) 0%, transparent 70%);
 }
 .cta-section .section-title { position: relative; }
 .cta-section .section-desc { margin: 0 auto 40px; position: relative; }
@@ -458,10 +714,10 @@ section { position: relative; padding: 100px 40px; }
 .email-form input {
   flex: 1; font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 500;
   padding: 16px 20px; background: var(--surface);
-  border: 2px solid rgba(33, 33, 222, 0.2); border-right: none;
+  border: 3px solid rgba(77, 77, 255, 0.2); border-right: none;
   color: #fff; letter-spacing: 1px; outline: none; transition: border-color 0.3s;
 }
-.email-form input::placeholder { color: rgba(140, 140, 255, 0.5); }
+.email-form input::placeholder { color: rgba(200, 200, 255, 0.4); }
 .email-form input:focus {
   border-color: var(--pac-yellow);
   box-shadow: 0 0 15px rgba(255, 204, 0, 0.1);
@@ -469,40 +725,54 @@ section { position: relative; padding: 100px 40px; }
 .email-form button {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.55rem;
   padding: 16px 24px; background: var(--pac-yellow);
-  border: 2px solid var(--pac-yellow); color: var(--void);
-  text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s;
+  border: 3px solid #b38f00; color: var(--void);
+  text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.15s;
+  box-shadow: 3px 3px 0 0 #b38f00;
 }
 .email-form button:hover {
-  box-shadow: 0 0 30px var(--pac-yellow-glow);
+  box-shadow: 0 0 30px var(--pac-yellow-glow), 3px 3px 0 0 #b38f00;
+  transform: translate(-1px, -1px);
+}
+.email-form button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 0 #b38f00;
 }
 
-/* ── Footer ── */
+/* ── Footer — Gold Accent ── */
 
 footer {
-  background: var(--void); padding: 60px 40px 30px;
-  border-top: 2px solid var(--maze-blue);
-  box-shadow: 0 -2px 20px rgba(33, 33, 222, 0.08);
+  background: var(--surface); padding: 60px 40px 30px;
+  border-top: 4px solid var(--warm-gold);
+  box-shadow: 0 -4px 30px rgba(212, 168, 67, 0.08);
 }
 .footer-top { display: flex; justify-content: space-between; align-items: flex-start; max-width: 1200px; margin: 0 auto 40px; flex-wrap: wrap; gap: 40px; }
 .footer-brand .nav-logo { margin-bottom: 12px; display: block; }
-.footer-tagline { font-weight: 300; font-size: 0.9rem; color: rgba(140, 140, 255, 0.55); letter-spacing: 1px; }
+.footer-tagline { font-weight: 300; font-size: 0.9rem; color: rgba(200, 200, 255, 0.45); letter-spacing: 1px; }
 .footer-links-group { display: flex; gap: 60px; }
 .footer-col h4 {
   font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
-  letter-spacing: 2px; text-transform: uppercase; color: var(--pac-yellow);
-  margin-bottom: 16px; text-shadow: 0 0 6px var(--pac-yellow-glow);
+  letter-spacing: 2px; text-transform: uppercase; color: var(--warm-gold);
+  margin-bottom: 16px; text-shadow: 0 0 6px var(--warm-gold-glow);
 }
 .footer-col a {
   display: block; font-weight: 400; font-size: 0.95rem;
-  color: rgba(140, 140, 255, 0.6); text-decoration: none;
+  color: rgba(200, 200, 255, 0.5); text-decoration: none;
   margin-bottom: 10px; transition: color 0.3s; letter-spacing: 0.5px;
 }
 .footer-col a:hover { color: var(--ghost-cyan); text-shadow: 0 0 8px rgba(0, 255, 222, 0.3); }
+
+.footer-divider {
+  max-width: 1200px; margin: 0 auto 30px;
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 168, 67, 0.25), transparent);
+}
+
 .footer-bottom {
   text-align: center; padding-top: 30px;
-  border-top: 1px solid rgba(33, 33, 222, 0.1);
+  border-top: 1px solid rgba(212, 168, 67, 0.1);
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.45rem; color: rgba(140, 140, 255, 0.5); letter-spacing: 1px;
+  font-size: 0.45rem; color: rgba(200, 200, 255, 0.4); letter-spacing: 1px;
 }
 
 /* ── CRT Power-On Effect ── */
@@ -538,15 +808,28 @@ body.crt-boot {
 @keyframes titleIn { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Pac-Man pellet dots instead of stars */
+/* Starfield — mixed sizes and colors */
 .stars { position: absolute; inset: 0; overflow: hidden; z-index: 1; }
 .star {
-  position: absolute; background: var(--pac-yellow);
-  border-radius: 50%; animation: pelletGlow 3s ease-in-out infinite;
+  position: absolute; border-radius: 50%;
+  animation: starTwinkle 4s ease-in-out infinite;
 }
-@keyframes pelletGlow {
-  0%, 100% { opacity: 0.12; box-shadow: none; }
-  50% { opacity: 0.5; box-shadow: 0 0 6px var(--pac-yellow-glow); }
+.star--yellow { background: var(--pac-yellow); }
+.star--pink { background: var(--hot-pink); }
+.star--cyan { background: var(--ghost-cyan); }
+.star--white { background: rgba(255, 255, 255, 0.8); }
+.star--large {
+  width: 4px !important; height: 4px !important;
+  animation: starPulse 3s ease-in-out infinite;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.6; }
+}
+@keyframes starPulse {
+  0%, 100% { opacity: 0.15; box-shadow: none; transform: scale(1); }
+  50% { opacity: 0.8; box-shadow: 0 0 8px currentColor; transform: scale(1.3); }
 }
 
 /* ── Product Detail Page ── */
@@ -572,7 +855,7 @@ body.crt-boot {
   align-items: center;
   justify-content: center;
   background: var(--void);
-  border: 2px solid rgba(33, 33, 222, 0.2);
+  border: 3px solid rgba(77, 77, 255, 0.2);
   position: relative;
   box-shadow: 0 0 40px rgba(33, 33, 222, 0.08);
 }
@@ -598,11 +881,11 @@ body.crt-boot {
   margin-bottom: 28px;
   text-shadow: 0 0 12px var(--pac-yellow-glow);
 }
-.product-detail-price .price-suffix { font-size: 0.6em; color: rgba(140, 140, 255, 0.6); text-shadow: none; }
+.product-detail-price .price-suffix { font-size: 0.6em; color: rgba(200, 200, 255, 0.5); text-shadow: none; }
 
 .product-detail-desc {
   font-weight: 300; font-size: 1.1rem;
-  color: rgba(140, 140, 255, 0.75);
+  color: rgba(200, 200, 255, 0.65);
   line-height: 1.8; margin-bottom: 32px;
   letter-spacing: 0.5px;
 }
@@ -614,7 +897,7 @@ body.crt-boot {
   font-weight: 400; font-size: 1rem;
   color: rgba(255, 255, 255, 0.7);
   padding: 12px 0;
-  border-bottom: 1px solid rgba(33, 33, 222, 0.08);
+  border-bottom: 1px solid rgba(77, 77, 255, 0.08);
   letter-spacing: 0.5px;
 }
 .product-features li::before {
@@ -629,23 +912,27 @@ body.crt-boot {
 
 .btn-add-cart {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.7rem;
-  padding: 18px 40px; background: var(--pac-yellow); border: none; color: var(--void);
+  padding: 18px 40px; background: var(--pac-yellow); border: 3px solid #b38f00; color: var(--void);
   text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 0 20px var(--pac-yellow-glow);
+  transition: all 0.15s;
+  box-shadow: 4px 4px 0 0 #b38f00, 0 0 20px var(--pac-yellow-glow);
 }
 .btn-add-cart:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 40px var(--pac-yellow-glow), 0 0 60px rgba(255, 204, 0, 0.15);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 #b38f00, 0 0 40px var(--pac-yellow-glow);
+}
+.btn-add-cart:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 #b38f00;
 }
 
 .btn-back {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.6rem;
-  color: var(--maze-blue-bright); text-decoration: none; letter-spacing: 2px;
+  color: var(--cream); text-decoration: none; letter-spacing: 2px;
   text-transform: uppercase; transition: all 0.3s; display: inline-block;
-  padding: 18px 24px;
+  padding: 18px 24px; opacity: 0.6;
 }
-.btn-back:hover { color: var(--ghost-pink); text-shadow: 0 0 8px rgba(255, 184, 255, 0.4); }
+.btn-back:hover { color: var(--hot-pink); opacity: 1; text-shadow: 0 0 8px var(--hot-pink-glow); }
 
 /* ── Shop Page Header ── */
 
@@ -661,7 +948,7 @@ body.crt-boot {
   content: '';
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: 600px; height: 600px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(33, 33, 222, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 204, 0, 0.04) 0%, transparent 70%);
 }
 .shop-page-hero .section-desc { margin: 0 auto; position: relative; }
 .shop-page-hero .section-label { position: relative; }
@@ -685,7 +972,7 @@ body.crt-boot {
   content: '';
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: 500px; height: 500px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(33, 33, 222, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 45, 149, 0.04) 0%, transparent 70%);
 }
 .explore-hero-icon {
   font-size: 4rem; margin-bottom: 16px; position: relative;
@@ -711,13 +998,13 @@ body.crt-boot {
 }
 .explore-card {
   background: var(--surface-light);
-  border: 2px solid rgba(33, 33, 222, 0.12);
-  padding: 28px; transition: all 0.4s;
+  border: 3px solid rgba(77, 77, 255, 0.12);
+  padding: 28px; transition: all 0.3s;
 }
 .explore-card:hover {
   border-color: var(--pac-yellow);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 30px rgba(255, 204, 0, 0.08);
+  transform: translate(-2px, -4px);
+  box-shadow: 4px 4px 0 0 rgba(255, 204, 0, 0.15), 0 6px 30px rgba(255, 204, 0, 0.06);
 }
 .explore-card-header {
   display: flex; justify-content: space-between; align-items: flex-start;
@@ -732,7 +1019,7 @@ body.crt-boot {
 .explore-card-tag {
   font-family: 'Press Start 2P', monospace; font-size: 0.4rem;
   background: var(--ghost-red); color: #fff; padding: 4px 8px;
-  letter-spacing: 1px; box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+  letter-spacing: 1px; box-shadow: 2px 2px 0 0 rgba(255, 0, 0, 0.3);
 }
 .explore-card-title {
   font-family: 'Press Start 2P', monospace; font-weight: 400;
@@ -741,7 +1028,7 @@ body.crt-boot {
 }
 .explore-card-desc {
   font-weight: 300; font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.65); line-height: 1.7;
+  color: rgba(255, 255, 255, 0.55); line-height: 1.7;
 }
 .explore-back-bar {
   max-width: 1200px; margin: 40px auto 0;
@@ -784,12 +1071,12 @@ body.crt-boot {
 .contact-details { display: flex; flex-direction: column; gap: 20px; }
 .contact-detail-item {
   padding: 16px 0;
-  border-bottom: 1px solid rgba(33, 33, 222, 0.08);
+  border-bottom: 1px solid rgba(77, 77, 255, 0.08);
 }
 .contact-detail-label {
   display: block; font-family: 'Press Start 2P', monospace;
-  font-size: 0.5rem; color: var(--pac-yellow); letter-spacing: 2px;
-  margin-bottom: 6px; text-shadow: 0 0 6px var(--pac-yellow-glow);
+  font-size: 0.5rem; color: var(--warm-gold); letter-spacing: 2px;
+  margin-bottom: 6px; text-shadow: 0 0 6px var(--warm-gold-glow);
 }
 .contact-detail-value {
   font-size: 1.05rem; color: rgba(255, 255, 255, 0.7);
@@ -799,16 +1086,16 @@ body.crt-boot {
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-label {
   font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
-  color: var(--maze-blue-bright); letter-spacing: 2px;
+  color: var(--cream); letter-spacing: 2px; opacity: 0.6;
 }
 .form-input {
   font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 500;
   padding: 14px 16px; background: var(--surface-light);
-  border: 2px solid rgba(33, 33, 222, 0.15);
+  border: 3px solid rgba(77, 77, 255, 0.15);
   color: #fff; letter-spacing: 0.5px; outline: none;
   transition: border-color 0.3s;
 }
-.form-input::placeholder { color: rgba(140, 140, 255, 0.5); }
+.form-input::placeholder { color: rgba(200, 200, 255, 0.4); }
 .form-input:focus {
   border-color: var(--pac-yellow);
   box-shadow: 0 0 15px rgba(255, 204, 0, 0.08);
@@ -817,7 +1104,7 @@ body.crt-boot {
 
 .contact-success {
   text-align: center; padding: 60px 30px;
-  border: 2px solid var(--acid-green);
+  border: 3px solid var(--acid-green);
   background: rgba(57, 255, 20, 0.04);
 }
 .contact-success-icon {
@@ -841,23 +1128,27 @@ body.crt-boot {
 .filter-btn {
   font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
   padding: 10px 20px; background: transparent;
-  border: 2px solid rgba(33, 33, 222, 0.2);
-  color: var(--maze-blue-bright); cursor: pointer;
-  letter-spacing: 1px; transition: all 0.3s;
+  border: 3px solid rgba(77, 77, 255, 0.2);
+  color: var(--cream); cursor: pointer;
+  letter-spacing: 1px; transition: all 0.15s;
+  opacity: 0.6;
+  box-shadow: 3px 3px 0 0 rgba(77, 77, 255, 0.1);
 }
 .filter-btn:hover {
-  border-color: var(--pac-yellow); color: var(--pac-yellow);
+  border-color: var(--pac-yellow); color: var(--pac-yellow); opacity: 1;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 rgba(255, 204, 0, 0.15);
 }
 .filter-btn.active {
   background: var(--pac-yellow); color: var(--void);
-  border-color: var(--pac-yellow);
-  box-shadow: 0 0 15px var(--pac-yellow-glow);
+  border-color: #b38f00; opacity: 1;
+  box-shadow: 3px 3px 0 0 #b38f00, 0 0 15px var(--pac-yellow-glow);
 }
 
 /* ── Trivia Enhancements ── */
 
 .trivia-explanation {
-  font-size: 0.85rem; color: rgba(140, 140, 255, 0.7);
+  font-size: 0.85rem; color: rgba(139, 172, 15, 0.6);
   margin-bottom: 16px; min-height: 24px; transition: opacity 0.3s;
   opacity: 0;
 }
@@ -881,8 +1172,9 @@ body.crt-boot {
   display: flex; align-items: center; justify-content: center;
   gap: 12px; max-width: 500px; margin: 0 auto;
   padding: 16px 24px; position: relative;
-  border: 2px solid var(--acid-green);
+  border: 3px solid var(--acid-green);
   background: rgba(57, 255, 20, 0.04);
+  box-shadow: 3px 3px 0 0 rgba(57, 255, 20, 0.2);
 }
 .newsletter-success-icon {
   font-size: 1.4rem; color: var(--acid-green);
@@ -900,9 +1192,10 @@ body.crt-boot {
   cursor: pointer; padding: 8px; z-index: 101;
 }
 .nav-hamburger span {
-  display: block; width: 24px; height: 2px;
-  background: var(--pac-yellow); margin: 5px 0;
+  display: block; width: 24px; height: 3px;
+  background: var(--pac-yellow); margin: 4px 0;
   transition: all 0.3s;
+  box-shadow: 0 0 4px var(--pac-yellow-glow);
 }
 .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .nav-hamburger.open span:nth-child(2) { opacity: 0; }
@@ -910,7 +1203,7 @@ body.crt-boot {
 
 .nav-mobile-overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(0, 0, 0, 0.95); z-index: 99;
+  background: rgba(5, 5, 10, 0.97); z-index: 99;
   flex-direction: column; align-items: center;
   justify-content: center; gap: 30px;
 }
@@ -954,8 +1247,8 @@ main > section:first-child {
 
 .about-photo-frame {
   position: relative;
-  border: 2px solid var(--maze-blue);
-  box-shadow: 0 0 50px rgba(33, 33, 222, 0.12);
+  border: 3px solid var(--warm-gold);
+  box-shadow: 0 0 50px rgba(212, 168, 67, 0.08), 4px 4px 0 0 rgba(212, 168, 67, 0.2);
   overflow: hidden;
   aspect-ratio: 3 / 4;
 }
@@ -978,7 +1271,7 @@ main > section:first-child {
 }
 .about-photo-label {
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.5rem; color: var(--maze-blue-bright);
+  font-size: 0.5rem; color: var(--warm-gold);
   letter-spacing: 3px; text-transform: uppercase;
   margin-top: 16px; text-align: center;
 }
@@ -1010,15 +1303,22 @@ main > section:first-child {
 /* ── Responsive ── */
 
 @media (max-width: 768px) {
-  nav { padding: 14px 20px; }
+  nav { padding: 0 20px; }
   .nav-links { display: none; }
   .nav-hamburger { display: block; }
+  .nav-pixel-dots { display: none; }
   section { padding: 70px 20px; }
+  .section-vlabel { display: none; }
+  .hero { padding: 100px 16px 50px; }
+  .hero h1 { font-size: clamp(3rem, 14vw, 5rem); letter-spacing: 3px; }
+  .hero h1 .line2 { letter-spacing: 8px; }
   .hero-buttons { flex-direction: column; align-items: center; }
+  .hero-horizon { bottom: 30%; }
   .trivia-options { grid-template-columns: 1fr; }
   .footer-links-group { gap: 30px; }
   .email-form { flex-direction: column; }
-  .email-form input { border-right: 2px solid rgba(33, 33, 222, 0.2); }
+  .email-form input { border-right: 3px solid rgba(77, 77, 255, 0.2); }
+  .email-form button { box-shadow: none; }
   .product-detail { grid-template-columns: 1fr; gap: 30px; }
   .product-detail-img { height: 320px; }
   .shop-page-grid { padding: 0 20px 70px; }
@@ -1032,4 +1332,8 @@ main > section:first-child {
   .explore-grid { grid-template-columns: 1fr; }
   .error-section { padding: 120px 20px 70px; }
   .shop-page-hero { padding-top: 100px; }
+  .cat-badge { width: 40px; height: 40px; font-size: 0.3rem; }
+  .shop-section::before,
+  .trivia-section::before,
+  .categories-section::before { font-size: 0.35rem; }
 }

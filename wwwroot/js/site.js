@@ -10,16 +10,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var starsEl = document.getElementById('stars');
   if (starsEl) {
-    for (var i = 0; i < 45; i++) {
-      var pellet = document.createElement('div');
-      pellet.className = 'star';
-      pellet.style.left = Math.random() * 100 + '%';
-      pellet.style.top = Math.random() * 55 + '%';
-      pellet.style.animationDelay = Math.random() * 3 + 's';
-      var size = (Math.random() * 3 + 2) + 'px';
-      pellet.style.width = size;
-      pellet.style.height = size;
-      starsEl.appendChild(pellet);
+    var colors = ['star--yellow', 'star--pink', 'star--cyan', 'star--white', 'star--white', 'star--white'];
+    for (var i = 0; i < 70; i++) {
+      var star = document.createElement('div');
+      var colorClass = colors[Math.floor(Math.random() * colors.length)];
+      var isLarge = Math.random() < 0.1;
+      star.className = 'star ' + colorClass + (isLarge ? ' star--large' : '');
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 55 + '%';
+      star.style.animationDelay = Math.random() * 4 + 's';
+      star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      if (!isLarge) {
+        var size = (Math.random() * 2 + 1) + 'px';
+        star.style.width = size;
+        star.style.height = size;
+      }
+      starsEl.appendChild(star);
     }
   }
 
