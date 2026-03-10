@@ -12,9 +12,9 @@
   --acid-green: #39ff14;
   --outrun-sky: #3ba3ff;
   --outrun-red: #ff2040;
-  --void: #0d0d1a;
-  --surface: #12121f;
-  --surface-light: #18182a;
+  --void: #f5f0e8;
+  --surface: #ede7d9;
+  --surface-light: #e6dece;
   --grid-color: rgba(33, 33, 222, 0.18);
 
   --coral: #ff6b6b;
@@ -28,19 +28,19 @@
   --cream: #f0e6d3;
   --chrome-border: 3px solid rgba(255, 204, 0, 0.25);
   --panel-border: 3px solid rgba(77, 77, 255, 0.3);
-  --surface-alt: #0a0a1a;
+  --surface-alt: #f0ead8;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   background: var(--void);
-  color: var(--power-white);
+  color: #1a1a2e;
   font-family: 'Rajdhani', sans-serif;
   overflow-x: hidden;
 }
 
-/* CRT scanline overlay — tighter, more visible */
+/* CRT scanline overlay — softened for light bg */
 body::after {
   content: '';
   position: fixed;
@@ -49,20 +49,20 @@ body::after {
     0deg,
     transparent,
     transparent 1px,
-    rgba(0, 0, 0, 0.15) 1px,
-    rgba(0, 0, 0, 0.15) 3px
+    rgba(0, 0, 0, 0.05) 1px,
+    rgba(0, 0, 0, 0.05) 3px
   );
   pointer-events: none;
   z-index: 9999;
 }
 
-/* CRT vignette with subtle RGB fringe */
+/* CRT vignette — lighter on cream */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.6) 100%);
+    radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.18) 100%);
   pointer-events: none;
   z-index: 9998;
 }
@@ -83,7 +83,7 @@ a { color: inherit; text-decoration: none; }
   position: fixed; top: 10px; left: 10px; z-index: 10000;
   width: auto; height: auto; padding: 12px 24px; margin: 0;
   clip: auto; overflow: visible;
-  background: var(--pac-yellow); color: var(--void);
+  background: var(--pac-yellow); color: #1a1a2e;
   font-family: 'Press Start 2P', monospace; font-size: 0.6rem;
   letter-spacing: 1px; text-decoration: none;
   box-shadow: 0 0 20px var(--pac-yellow-glow);
@@ -104,7 +104,7 @@ nav {
   display: flex; justify-content: space-between; align-items: center;
   padding: 0 40px;
   height: 64px;
-  background: rgba(5, 5, 10, 0.96);
+  background: rgba(245, 240, 232, 0.96);
   backdrop-filter: blur(12px);
   border-bottom: 3px solid var(--pac-yellow);
   box-shadow:
@@ -123,7 +123,7 @@ nav {
 
 .nav-links a {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.55rem;
-  color: var(--cream); text-decoration: none; text-transform: uppercase;
+  color: #1a1a2e; text-decoration: none; text-transform: uppercase;
   letter-spacing: 2px; transition: all 0.3s;
   opacity: 0.7;
 }
@@ -141,7 +141,7 @@ nav {
   box-shadow: 3px 3px 0 0 rgba(255, 204, 0, 0.3);
 }
 .nav-cta:hover {
-  background: var(--pac-yellow); color: var(--void);
+  background: var(--pac-yellow); color: #1a1a2e;
   box-shadow: 0 0 25px var(--pac-yellow-glow), 3px 3px 0 0 rgba(255,204,0,0.5);
   transform: translate(-1px, -1px);
 }
@@ -152,7 +152,7 @@ nav {
   position: relative; min-height: 100vh; display: flex; flex-direction: column;
   justify-content: center; align-items: center; text-align: center;
   padding: 120px 20px 60px; overflow: hidden;
-  background: linear-gradient(180deg, #020010 0%, #050520 40%, #0a0a30 70%, #150825 100%);
+  background: linear-gradient(180deg, #f0e8d5 0%, #e8ddc5 40%, #ddd0b5 70%, #e8d5c0 100%);
 }
 
 /* Neon horizon glow line — via ::after on .hero */
@@ -204,7 +204,7 @@ nav {
 /* Mountain silhouette — coral-tinted (Lost in Space) */
 .skyline { position: absolute; bottom: 16%; left: -5%; right: -5%; height: 200px; z-index: 2; }
 .skyline svg { width: 110%; height: 100%; position: absolute; bottom: -2px; }
-.skyline polygon { fill: #1a0a15; }
+.skyline polygon { fill: #2a1a3a; }
 
 /* Hero glow behind title — via pseudo-element */
 .hero h1::before {
@@ -245,9 +245,9 @@ nav {
   -webkit-text-stroke: 2px rgba(255, 180, 0, 0.25);
 }
 .hero h1 .line2 {
-  display: block; font-size: 0.4em; color: var(--cream);
+  display: block; font-size: 0.4em; color: var(--hot-pink);
   letter-spacing: 18px;
-  text-shadow: 0 0 30px rgba(255, 45, 149, 0.3), 0 0 60px rgba(255, 45, 149, 0.1);
+  text-shadow: 0 0 30px rgba(255, 45, 149, 0.4), 0 0 60px rgba(255, 45, 149, 0.2);
   -webkit-text-stroke: 1px rgba(255, 45, 149, 0.15);
   opacity: 0.9;
 }
@@ -267,7 +267,7 @@ nav {
 .btn-primary {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.7rem;
   padding: 18px 36px; background: var(--pac-yellow); border: 3px solid #b38f00;
-  color: var(--void);
+  color: #1a1a2e;
   text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
   transition: all 0.15s; text-decoration: none; display: inline-block;
   box-shadow:
@@ -324,7 +324,7 @@ nav {
 .ticker-inner { display: flex; white-space: nowrap; animation: ticker 22s linear infinite; }
 .ticker-inner span {
   font-family: 'Press Start 2P', monospace; font-size: 0.55rem;
-  color: var(--void); letter-spacing: 2px; padding: 0 30px; text-transform: uppercase;
+  color: #1a1a2e; letter-spacing: 2px; padding: 0 30px; text-transform: uppercase;
   font-weight: 400;
 }
 .ticker-inner .highlight {
@@ -367,12 +367,12 @@ section { position: relative; padding: 100px 40px; }
 .section-title {
   font-family: 'Orbitron', sans-serif; font-weight: 900;
   font-size: clamp(2.2rem, 5vw, 3.8rem); text-transform: uppercase;
-  letter-spacing: 4px; margin-bottom: 16px; color: #fff;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.06);
+  letter-spacing: 4px; margin-bottom: 16px; color: #1a1a2e;
+  text-shadow: none;
+  -webkit-text-stroke: 1px rgba(26, 26, 46, 0.1);
 }
 .section-desc {
-  font-weight: 300; font-size: 1.15rem; color: rgba(200, 200, 255, 0.65);
+  font-weight: 300; font-size: 1.15rem; color: rgba(30, 30, 60, 0.65);
   max-width: 550px; line-height: 1.6; letter-spacing: 0.5px;
 }
 
@@ -437,31 +437,31 @@ section { position: relative; padding: 100px 40px; }
 .product-img {
   height: 320px; display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
-  background: var(--void);
+  background: var(--surface-light);
 }
 .product-card:nth-child(1) .product-img {
-  background: linear-gradient(160deg, #050515 30%, #150525 70%, #200a35);
+  background: linear-gradient(160deg, #f0e8f5 30%, #e8d5f5 70%, #ddc8f0);
 }
 .product-card:nth-child(2) .product-img {
-  background: linear-gradient(160deg, #050515 30%, #1a0020 70%, #2a0040);
+  background: linear-gradient(160deg, #f5e8f2 30%, #f0d5ea 70%, #e8c8de);
 }
 .product-card:nth-child(3) .product-img {
-  background: linear-gradient(160deg, #050515 30%, #001a10 70%, #002a18);
+  background: linear-gradient(160deg, #e8f5ee 30%, #d5f0e5 70%, #c8e8d8);
 }
 .product-card:nth-child(4) .product-img {
-  background: linear-gradient(160deg, #050515 30%, #1a1000 70%, #2a1a00);
+  background: linear-gradient(160deg, #f5f0e0 30%, #f0e5c8 70%, #e8d8b0);
 }
 .product-card:nth-child(5) .product-img {
-  background: linear-gradient(160deg, #050515 30%, #1a0a0a 70%, #2a1010);
+  background: linear-gradient(160deg, #f5e8e8 30%, #f0d5d5 70%, #e8c5c5);
 }
 .product-card:nth-child(6) .product-img {
-  background: linear-gradient(160deg, #050515 30%, #001a1a 70%, #002a2a);
+  background: linear-gradient(160deg, #e8f5f5 30%, #d5f0f0 70%, #c8e8e8);
 }
 .product-card:nth-child(7) .product-img {
-  background: linear-gradient(160deg, #050515 30%, #1a0a00 70%, #2a1500);
+  background: linear-gradient(160deg, #f5ede0 30%, #f0e0c8 70%, #e8d0b0);
 }
 .product-card:nth-child(8) .product-img {
-  background: linear-gradient(160deg, #050515 30%, #00101a 70%, #001a2a);
+  background: linear-gradient(160deg, #e8eef5 30%, #d5e5f0 70%, #c8d8e8);
 }
 
 .product-img::after {
@@ -492,20 +492,20 @@ section { position: relative; padding: 100px 40px; }
 }
 .product-info {
   padding: 20px;
-  border-top: 2px solid rgba(77, 77, 255, 0.1);
-  background: rgba(5, 5, 20, 0.5);
+  border-top: 2px solid rgba(77, 77, 255, 0.12);
+  background: rgba(240, 234, 220, 0.6);
 }
 .product-name {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.65rem;
-  letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; color: #fff;
+  letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; color: #1a1a2e;
 }
-.product-desc { font-weight: 300; font-size: 0.9rem; color: rgba(200, 200, 255, 0.6); margin-bottom: 14px; }
+.product-desc { font-weight: 300; font-size: 0.9rem; color: rgba(30, 30, 60, 0.65); margin-bottom: 14px; }
 .product-price {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.8rem;
   color: var(--pac-yellow);
   text-shadow: 0 0 8px var(--pac-yellow-glow);
 }
-.product-price .price-suffix { font-size: 0.7em; color: rgba(200, 200, 255, 0.5); text-shadow: none; }
+.product-price .price-suffix { font-size: 0.7em; color: rgba(30, 30, 60, 0.5); text-shadow: none; }
 
 /* ── Trivia — Retro Terminal / LCD ── */
 
@@ -528,8 +528,8 @@ section { position: relative; padding: 100px 40px; }
 }
 .trivia-card {
   max-width: 700px; margin: 50px auto 0;
-  background: linear-gradient(160deg, #0a120a, #081008);
-  border: 3px solid rgba(139, 172, 15, 0.3);
+  background: linear-gradient(160deg, #eef5e8, #e5f0dc);
+  border: 3px solid rgba(139, 172, 15, 0.35);
   padding: 50px 40px; position: relative;
   box-shadow:
     0 0 40px rgba(139, 172, 15, 0.06),
@@ -627,23 +627,23 @@ section { position: relative; padding: 100px 40px; }
 }
 
 .cat-card:nth-child(1) {
-  background: linear-gradient(135deg, #1a0505 0%, #2a0808 100%);
+  background: linear-gradient(135deg, #f5e8e8 0%, #f0dede 100%);
   border-color: rgba(255, 0, 0, 0.2);
 }
 .cat-card:nth-child(2) {
-  background: linear-gradient(135deg, #150520 0%, #200835 100%);
-  border-color: rgba(255, 184, 255, 0.2);
+  background: linear-gradient(135deg, #f0e8f5 0%, #e8d8f0 100%);
+  border-color: rgba(255, 184, 255, 0.3);
 }
 .cat-card:nth-child(3) {
-  background: linear-gradient(135deg, #051510 0%, #082a1a 100%);
+  background: linear-gradient(135deg, #e8f5f2 0%, #d8f0e8 100%);
   border-color: rgba(0, 255, 222, 0.2);
 }
 .cat-card:nth-child(4) {
-  background: linear-gradient(135deg, #151005 0%, #2a1a08 100%);
-  border-color: rgba(255, 184, 82, 0.2);
+  background: linear-gradient(135deg, #f5f0e8 0%, #f0e8d5 100%);
+  border-color: rgba(255, 184, 82, 0.25);
 }
 .cat-card:nth-child(5) {
-  background: linear-gradient(135deg, #0a1505 0%, #102a08 100%);
+  background: linear-gradient(135deg, #eef5e8 0%, #e0f0d0 100%);
   border-color: rgba(57, 255, 20, 0.2);
 }
 
@@ -667,9 +667,9 @@ section { position: relative; padding: 100px 40px; }
 .cat-icon { font-size: 3rem; margin-bottom: 18px; display: block; filter: drop-shadow(0 0 12px rgba(255,204,0,0.15)); }
 .cat-name {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.65rem;
-  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; color: #fff;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; color: #1a1a2e;
 }
-.cat-count { font-weight: 300; font-size: 0.85rem; color: rgba(200, 200, 255, 0.55); letter-spacing: 1px; }
+.cat-count { font-weight: 300; font-size: 0.85rem; color: rgba(30, 30, 60, 0.55); letter-spacing: 1px; }
 
 /* Starburst badge on gaming card (4th card) via pseudo-element */
 .cat-card:nth-child(4)::after {
@@ -678,7 +678,7 @@ section { position: relative; padding: 100px 40px; }
   width: 48px; height: 48px;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Press Start 2P', monospace; font-size: 0.35rem;
-  color: var(--void); letter-spacing: 0;
+  color: #1a1a2e; letter-spacing: 0;
   background: var(--pac-yellow);
   clip-path: polygon(50% 0%, 61% 17%, 80% 8%, 76% 30%, 98% 35%, 82% 50%, 98% 65%, 76% 70%, 80% 92%, 61% 83%, 50% 100%, 39% 83%, 20% 92%, 24% 70%, 2% 65%, 18% 50%, 2% 35%, 24% 30%, 20% 8%, 39% 17%);
   text-align: center;
@@ -706,9 +706,9 @@ section { position: relative; padding: 100px 40px; }
   flex: 1; font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 500;
   padding: 16px 20px; background: var(--surface);
   border: 3px solid rgba(77, 77, 255, 0.2); border-right: none;
-  color: #fff; letter-spacing: 1px; outline: none; transition: border-color 0.3s;
+  color: #1a1a2e; letter-spacing: 1px; outline: none; transition: border-color 0.3s;
 }
-.email-form input::placeholder { color: rgba(200, 200, 255, 0.4); }
+.email-form input::placeholder { color: rgba(30, 30, 60, 0.4); }
 .email-form input:focus {
   border-color: var(--pac-yellow);
   box-shadow: 0 0 15px rgba(255, 204, 0, 0.1);
@@ -716,7 +716,7 @@ section { position: relative; padding: 100px 40px; }
 .email-form button {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.55rem;
   padding: 16px 24px; background: var(--pac-yellow);
-  border: 3px solid #b38f00; color: var(--void);
+  border: 3px solid #b38f00; color: #1a1a2e;
   text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.15s;
   box-shadow: 3px 3px 0 0 #b38f00;
 }
@@ -738,7 +738,7 @@ footer {
 }
 .footer-top { display: flex; justify-content: space-between; align-items: flex-start; max-width: 1200px; margin: 0 auto 40px; flex-wrap: wrap; gap: 40px; }
 .footer-brand .nav-logo { margin-bottom: 12px; display: block; }
-.footer-tagline { font-weight: 300; font-size: 0.9rem; color: rgba(200, 200, 255, 0.45); letter-spacing: 1px; }
+.footer-tagline { font-weight: 300; font-size: 0.9rem; color: rgba(30, 30, 60, 0.55); letter-spacing: 1px; }
 .footer-links-group { display: flex; gap: 60px; }
 .footer-col h4 {
   font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
@@ -747,7 +747,7 @@ footer {
 }
 .footer-col a {
   display: block; font-weight: 400; font-size: 0.95rem;
-  color: rgba(200, 200, 255, 0.5); text-decoration: none;
+  color: rgba(30, 30, 60, 0.6); text-decoration: none;
   margin-bottom: 10px; transition: color 0.3s; letter-spacing: 0.5px;
 }
 .footer-col a:hover { color: var(--ghost-cyan); text-shadow: 0 0 8px rgba(0, 255, 222, 0.3); }
@@ -756,7 +756,7 @@ footer {
   position: relative;
   text-align: center; padding-top: 30px;
   font-family: 'Press Start 2P', monospace;
-  font-size: 0.45rem; color: rgba(200, 200, 255, 0.4); letter-spacing: 1px;
+  font-size: 0.45rem; color: rgba(30, 30, 60, 0.45); letter-spacing: 1px;
 }
 .footer-bottom::before {
   content: '';
@@ -808,7 +808,7 @@ body.crt-boot {
 .star--yellow { background: var(--pac-yellow); }
 .star--pink { background: var(--hot-pink); }
 .star--cyan { background: var(--ghost-cyan); }
-.star--white { background: rgba(255, 255, 255, 0.8); }
+.star--white { background: rgba(30, 30, 60, 0.25); }
 .star--large {
   width: 4px !important; height: 4px !important;
   animation: starPulse 3s ease-in-out infinite;
@@ -863,7 +863,7 @@ body.crt-boot {
   font-family: 'Press Start 2P', monospace; font-weight: 400;
   font-size: clamp(0.9rem, 2vw, 1.2rem);
   letter-spacing: 2px; text-transform: uppercase;
-  color: #fff; margin-bottom: 16px; line-height: 1.8;
+  color: #1a1a2e; margin-bottom: 16px; line-height: 1.8;
 }
 
 .product-detail-price {
@@ -872,11 +872,11 @@ body.crt-boot {
   margin-bottom: 28px;
   text-shadow: 0 0 12px var(--pac-yellow-glow);
 }
-.product-detail-price .price-suffix { font-size: 0.6em; color: rgba(200, 200, 255, 0.5); text-shadow: none; }
+.product-detail-price .price-suffix { font-size: 0.6em; color: rgba(30, 30, 60, 0.5); text-shadow: none; }
 
 .product-detail-desc {
   font-weight: 300; font-size: 1.1rem;
-  color: rgba(200, 200, 255, 0.65);
+  color: rgba(30, 30, 60, 0.65);
   line-height: 1.8; margin-bottom: 32px;
   letter-spacing: 0.5px;
 }
@@ -886,9 +886,9 @@ body.crt-boot {
 }
 .product-features li {
   font-weight: 400; font-size: 1rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(26, 26, 46, 0.75);
   padding: 12px 0;
-  border-bottom: 1px solid rgba(77, 77, 255, 0.08);
+  border-bottom: 1px solid rgba(77, 77, 255, 0.1);
   letter-spacing: 0.5px;
 }
 .product-features li::before {
@@ -903,7 +903,7 @@ body.crt-boot {
 
 .btn-add-cart {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.7rem;
-  padding: 18px 40px; background: var(--pac-yellow); border: 3px solid #b38f00; color: var(--void);
+  padding: 18px 40px; background: var(--pac-yellow); border: 3px solid #b38f00; color: #1a1a2e;
   text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
   transition: all 0.15s;
   box-shadow: 4px 4px 0 0 #b38f00, 0 0 20px var(--pac-yellow-glow);
@@ -919,7 +919,7 @@ body.crt-boot {
 
 .btn-back {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 0.6rem;
-  color: var(--cream); text-decoration: none; letter-spacing: 2px;
+  color: #1a1a2e; text-decoration: none; letter-spacing: 2px;
   text-transform: uppercase; transition: all 0.3s; display: inline-block;
   padding: 18px 24px; opacity: 0.6;
 }
@@ -1014,12 +1014,12 @@ body.crt-boot {
 }
 .explore-card-title {
   font-family: 'Press Start 2P', monospace; font-weight: 400;
-  font-size: 0.7rem; color: #fff; margin-bottom: 10px;
+  font-size: 0.7rem; color: #1a1a2e; margin-bottom: 10px;
   letter-spacing: 1px; line-height: 1.6;
 }
 .explore-card-desc {
   font-weight: 300; font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.55); line-height: 1.7;
+  color: rgba(30, 30, 60, 0.6); line-height: 1.7;
 }
 .explore-back-bar {
   max-width: 1200px; margin: 40px auto 0;
@@ -1070,23 +1070,23 @@ body.crt-boot {
   margin-bottom: 6px; text-shadow: 0 0 6px var(--warm-gold-glow);
 }
 .contact-detail-value {
-  font-size: 1.05rem; color: rgba(255, 255, 255, 0.7);
+  font-size: 1.05rem; color: rgba(26, 26, 46, 0.75);
 }
 
 .contact-form { display: flex; flex-direction: column; gap: 20px; }
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-label {
   font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
-  color: var(--cream); letter-spacing: 2px; opacity: 0.6;
+  color: #1a1a2e; letter-spacing: 2px; opacity: 0.6;
 }
 .form-input {
   font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 500;
   padding: 14px 16px; background: var(--surface-light);
   border: 3px solid rgba(77, 77, 255, 0.15);
-  color: #fff; letter-spacing: 0.5px; outline: none;
+  color: #1a1a2e; letter-spacing: 0.5px; outline: none;
   transition: border-color 0.3s;
 }
-.form-input::placeholder { color: rgba(200, 200, 255, 0.4); }
+.form-input::placeholder { color: rgba(30, 30, 60, 0.4); }
 .form-input:focus {
   border-color: var(--pac-yellow);
   box-shadow: 0 0 15px rgba(255, 204, 0, 0.08);
@@ -1104,10 +1104,10 @@ body.crt-boot {
 }
 .contact-success-title {
   font-family: 'Press Start 2P', monospace; font-size: 0.9rem;
-  color: #fff; margin-bottom: 12px;
+  color: #1a1a2e; margin-bottom: 12px;
 }
 .contact-success-text {
-  font-size: 1rem; color: rgba(255, 255, 255, 0.65); line-height: 1.7;
+  font-size: 1rem; color: rgba(26, 26, 46, 0.65); line-height: 1.7;
 }
 
 /* ── Shop Filters ── */
@@ -1120,7 +1120,7 @@ body.crt-boot {
   font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
   padding: 10px 20px; background: transparent;
   border: 3px solid rgba(77, 77, 255, 0.2);
-  color: var(--cream); cursor: pointer;
+  color: #1a1a2e; cursor: pointer;
   letter-spacing: 1px; transition: all 0.15s;
   opacity: 0.6;
   box-shadow: 3px 3px 0 0 rgba(77, 77, 255, 0.1);
@@ -1131,7 +1131,7 @@ body.crt-boot {
   box-shadow: 4px 4px 0 0 rgba(255, 204, 0, 0.15);
 }
 .filter-btn.active {
-  background: var(--pac-yellow); color: var(--void);
+  background: var(--pac-yellow); color: #1a1a2e;
   border-color: #b38f00; opacity: 1;
   box-shadow: 3px 3px 0 0 #b38f00, 0 0 15px var(--pac-yellow-glow);
 }
@@ -1152,7 +1152,7 @@ body.crt-boot {
   text-shadow: 0 0 20px var(--pac-yellow-glow);
 }
 .trivia-results-text {
-  font-size: 1rem; color: rgba(255, 255, 255, 0.65);
+  font-size: 1rem; color: rgba(26, 26, 46, 0.65);
   margin-bottom: 24px;
 }
 .trivia-replay { margin-top: 8px; }
@@ -1194,7 +1194,7 @@ body.crt-boot {
 
 .nav-mobile-overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(5, 5, 10, 0.97); z-index: 99;
+  background: rgba(245, 240, 232, 0.98); z-index: 99;
   flex-direction: column; align-items: center;
   justify-content: center; gap: 30px;
 }
@@ -1274,7 +1274,7 @@ main > section:first-child {
 }
 .about-body p {
   font-weight: 300; font-size: 1.15rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(26, 26, 46, 0.75);
   line-height: 1.9; letter-spacing: 0.3px;
   margin-bottom: 20px;
 }
