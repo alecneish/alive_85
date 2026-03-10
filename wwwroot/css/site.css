@@ -12,9 +12,9 @@
   --acid-green: #39ff14;
   --outrun-sky: #3ba3ff;
   --outrun-red: #ff2040;
-  --void: #000000;
-  --surface: #05050a;
-  --surface-light: #0a0a14;
+  --void: #0d0d1a;
+  --surface: #12121f;
+  --surface-light: #18182a;
   --grid-color: rgba(33, 33, 222, 0.18);
 
   --coral: #ff6b6b;
@@ -112,17 +112,6 @@ nav {
     0 4px 30px rgba(255, 204, 0, 0.06);
 }
 
-.nav-pixel-dots {
-  display: flex; gap: 6px; align-items: center;
-}
-.nav-pixel-dots span {
-  width: 8px; height: 8px;
-  display: block;
-}
-.nav-pixel-dots span:nth-child(1) { background: var(--ghost-red); box-shadow: 0 0 6px rgba(255,0,0,0.5); }
-.nav-pixel-dots span:nth-child(2) { background: var(--pac-yellow); box-shadow: 0 0 6px var(--pac-yellow-glow); }
-.nav-pixel-dots span:nth-child(3) { background: var(--acid-green); box-shadow: 0 0 6px rgba(57,255,20,0.5); }
-
 .nav-logo {
   font-family: 'Press Start 2P', monospace; font-weight: 400; font-size: 1.2rem;
   letter-spacing: 3px; color: var(--pac-yellow);
@@ -166,8 +155,9 @@ nav {
   background: linear-gradient(180deg, #020010 0%, #050520 40%, #0a0a30 70%, #150825 100%);
 }
 
-/* Neon horizon glow line (Lost in Space inspired) */
-.hero-horizon {
+/* Neon horizon glow line — via ::after on .hero */
+.hero::after {
+  content: '';
   position: absolute;
   bottom: 28%;
   left: -10%; right: -10%;
@@ -179,13 +169,6 @@ nav {
     0 0 120px rgba(255, 45, 149, 0.15);
   z-index: 3;
   opacity: 0.9;
-}
-.hero-horizon::before {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 80px;
-  background: linear-gradient(0deg, rgba(255, 45, 149, 0.08), transparent);
 }
 
 .grid-floor {
@@ -223,14 +206,15 @@ nav {
 .skyline svg { width: 110%; height: 100%; position: absolute; bottom: -2px; }
 .skyline polygon { fill: #1a0a15; }
 
-/* Hero glow behind title */
-.hero-title-glow {
+/* Hero glow behind title — via pseudo-element */
+.hero h1::before {
+  content: '';
   position: absolute;
   top: 50%; left: 50%;
-  transform: translate(-50%, -60%);
+  transform: translate(-50%, -50%);
   width: 600px; height: 400px;
   background: radial-gradient(ellipse, rgba(255, 204, 0, 0.06) 0%, rgba(255, 45, 149, 0.03) 40%, transparent 70%);
-  z-index: 3;
+  z-index: -1;
   pointer-events: none;
 }
 
@@ -249,6 +233,7 @@ nav {
   font-size: clamp(4.5rem, 14vw, 10rem); line-height: 0.95;
   text-transform: uppercase; letter-spacing: 8px; z-index: 5;
   animation: titleIn 1s ease-out 0.3s both;
+  position: relative;
 }
 .hero h1 .line1 {
   display: block; color: var(--pac-yellow);
@@ -352,8 +337,10 @@ nav {
 
 section { position: relative; padding: 100px 40px; }
 
-/* Section vertical label (ThreeSixtyEight / Mochi) */
-.section-vlabel {
+/* Section vertical labels via pseudo-elements */
+.shop-section::after,
+.trivia-section::after,
+.categories-section::after {
   position: absolute;
   left: 12px; top: 50%;
   transform: rotate(-90deg) translateX(-50%);
@@ -362,11 +349,14 @@ section { position: relative; padding: 100px 40px; }
   font-size: 0.4rem;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: rgba(255, 204, 0, 0.15);
+  color: rgba(255, 204, 0, 0.12);
   white-space: nowrap;
   pointer-events: none;
   z-index: 1;
 }
+.shop-section::after { content: 'Fresh Drops 2025'; }
+.trivia-section::after { content: 'Test Your Knowledge'; }
+.categories-section::after { content: 'Explore the Decade'; }
 
 .section-label {
   font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
@@ -681,18 +671,19 @@ section { position: relative; padding: 100px 40px; }
 }
 .cat-count { font-weight: 300; font-size: 0.85rem; color: rgba(200, 200, 255, 0.55); letter-spacing: 1px; }
 
-/* Starburst badge (Letterista inspired) */
-.cat-badge {
+/* Starburst badge on gaming card (4th card) via pseudo-element */
+.cat-card:nth-child(4)::after {
+  content: 'HOT';
   position: absolute; top: 12px; right: 12px;
-  width: 52px; height: 52px;
+  width: 48px; height: 48px;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Press Start 2P', monospace; font-size: 0.35rem;
   color: var(--void); letter-spacing: 0;
   background: var(--pac-yellow);
   clip-path: polygon(50% 0%, 61% 17%, 80% 8%, 76% 30%, 98% 35%, 82% 50%, 98% 65%, 76% 70%, 80% 92%, 61% 83%, 50% 100%, 39% 83%, 20% 92%, 24% 70%, 2% 65%, 18% 50%, 2% 35%, 24% 30%, 20% 8%, 39% 17%);
-  box-shadow: 0 0 10px var(--pac-yellow-glow);
   text-align: center;
   line-height: 1.2;
+  z-index: 2;
 }
 
 /* ── CTA — Newsletter ── */
@@ -761,18 +752,18 @@ footer {
 }
 .footer-col a:hover { color: var(--ghost-cyan); text-shadow: 0 0 8px rgba(0, 255, 222, 0.3); }
 
-.footer-divider {
-  max-width: 1200px; margin: 0 auto 30px;
-  border: none;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212, 168, 67, 0.25), transparent);
-}
-
 .footer-bottom {
+  position: relative;
   text-align: center; padding-top: 30px;
-  border-top: 1px solid rgba(212, 168, 67, 0.1);
   font-family: 'Press Start 2P', monospace;
   font-size: 0.45rem; color: rgba(200, 200, 255, 0.4); letter-spacing: 1px;
+}
+.footer-bottom::before {
+  content: '';
+  display: block;
+  max-width: 1200px; margin: 0 auto 30px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 168, 67, 0.25), transparent);
 }
 
 /* ── CRT Power-On Effect ── */
@@ -1306,9 +1297,10 @@ main > section:first-child {
   nav { padding: 0 20px; }
   .nav-links { display: none; }
   .nav-hamburger { display: block; }
-  .nav-pixel-dots { display: none; }
   section { padding: 70px 20px; }
-  .section-vlabel { display: none; }
+  .shop-section::after,
+  .trivia-section::after,
+  .categories-section::after { display: none; }
   .hero { padding: 100px 16px 50px; }
   .hero h1 { font-size: clamp(3rem, 14vw, 5rem); letter-spacing: 3px; }
   .hero h1 .line2 { letter-spacing: 8px; }
@@ -1332,7 +1324,7 @@ main > section:first-child {
   .explore-grid { grid-template-columns: 1fr; }
   .error-section { padding: 120px 20px 70px; }
   .shop-page-hero { padding-top: 100px; }
-  .cat-badge { width: 40px; height: 40px; font-size: 0.3rem; }
+  .cat-card:nth-child(4)::after { width: 38px; height: 38px; font-size: 0.3rem; }
   .shop-section::before,
   .trivia-section::before,
   .categories-section::before { font-size: 0.35rem; }
