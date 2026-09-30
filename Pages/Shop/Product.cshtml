@@ -16,14 +16,15 @@ else
 {
   <section class="product-detail-section">
     <div class="product-detail">
-      <div class="product-detail-img">
+      <div class="product-detail-img" data-name="@Model.Product.Name">
         @if (!string.IsNullOrEmpty(Model.Product.Tag))
         {
-          <span class="product-tag">@Model.Product.Tag</span>
+          <span class="product-tag @(Model.Product.Tag == "Retro Reissue" ? "tag-rose" : "tag-gold")">@Model.Product.Tag</span>
         }
         @if (!string.IsNullOrEmpty(Model.Product.ImagePath))
         {
-          <img src="@Model.Product.ImagePath" alt="@Model.Product.Name" class="product-svg product-svg-detail" />
+          <img src="@Model.Product.ImagePath" alt="@Model.Product.Name" class="product-svg-detail"
+               onerror="this.closest('.product-detail-img').classList.add('img-error')" />
         }
         else
         {
@@ -31,10 +32,10 @@ else
         }
       </div>
       <div class="product-detail-info">
-        <div class="section-label">// @(Model.Product.Tag ?? "Shop")</div>
+        <div class="section-label">@(Model.Product.Tag ?? "Shop")</div>
         <h1 class="product-detail-name">@Model.Product.Name</h1>
         <div class="product-detail-price">
-          @Model.Product.Price.ToString("C")@if (!string.IsNullOrEmpty(Model.Product.PriceSuffix))
+          @Model.Product.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))@if (!string.IsNullOrEmpty(Model.Product.PriceSuffix))
           {<span class="price-suffix">@Model.Product.PriceSuffix</span>}
         </div>
         <p class="product-detail-desc">@Model.Product.DetailDescription</p>
@@ -45,7 +46,7 @@ else
           }
         </ul>
         <div class="product-detail-actions">
-          <button class="btn-add-cart" onclick="alert('Coming soon — the 80s are loading...')">Add to Cart</button>
+          <button type="button" class="btn-add-cart-detail" onclick="alert('Coming soon — the 80s are loading...')">Add to Cart</button>
           <a class="btn-back" asp-page="/Shop/Index">&#x25C2; Back to Shop</a>
         </div>
       </div>

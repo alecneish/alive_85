@@ -6,16 +6,7 @@
 }
 
 <section class="hero">
-  <div class="stars" id="stars"></div>
-  <div class="chrome-ring"></div>
-  <div class="skyline">
-    <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
-      <polygon fill="#000000" points="0,200 0,160 40,160 40,100 60,100 60,130 100,130 100,70 120,70 120,130 160,130 160,90 200,90 200,140 240,140 240,110 260,110 260,60 280,60 280,110 320,110 320,150 380,150 380,80 400,80 400,120 440,120 440,140 500,140 500,55 520,55 520,140 560,140 560,100 600,100 600,130 640,130 640,75 680,75 680,45 700,45 700,75 720,75 720,130 760,130 760,110 800,110 800,85 840,85 840,50 860,50 860,85 880,85 880,120 920,120 920,140 960,140 960,65 980,65 980,130 1020,130 1020,90 1060,90 1060,140 1100,140 1100,110 1140,110 1140,70 1160,70 1160,110 1200,110 1200,150 1240,150 1240,95 1260,95 1260,140 1300,140 1300,120 1340,120 1340,80 1360,80 1360,140 1400,140 1400,160 1440,160 1440,200" />
-    </svg>
-  </div>
-  <div class="grid-floor"></div>
-
-  <span class="hero-badge">&#x25B8; Rewind &bull; Relive &bull; Replay</span>
+  <span class="hero-badge">Rewind &bull; Relive &bull; Replay</span>
   <h1>
     <span class="line1">alive85</span>
     <span class="line2">The 80s Never Died</span>
@@ -49,30 +40,40 @@
   <div class="product-grid">
     @foreach (var product in Model.FeaturedProducts)
     {
-      <a class="product-card" asp-page="/Shop/Product" asp-route-id="@product.Id">
-        <div class="product-img">
-          @if (!string.IsNullOrEmpty(product.Tag))
-          {
-            <span class="product-tag">@product.Tag</span>
-          }
-          @if (!string.IsNullOrEmpty(product.ImagePath))
-          {
-            <img src="@product.ImagePath" alt="@product.Name" class="product-svg" />
-          }
-          else
-          {
-            <span class="emoji-display">@product.Emoji</span>
-          }
-        </div>
-        <div class="product-info">
-          <div class="product-name">@product.Name</div>
-          <div class="product-desc">@product.Description</div>
-          <div class="product-price">
-            @product.Price.ToString("C")@if (!string.IsNullOrEmpty(product.PriceSuffix))
-            {<span class="price-suffix">@product.PriceSuffix</span>}
+      var usdPrice = product.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+      var tagClass = product.Tag == "Retro Reissue" ? "tag-rose" : "tag-gold";
+      <div class="product-card" data-tag="@(product.Tag ?? "")">
+        <a class="product-card-link" asp-page="/Shop/Product" asp-route-id="@product.Id">
+          <div class="product-img" data-name="@product.Name">
+            @if (!string.IsNullOrEmpty(product.Tag))
+            {
+              <span class="product-tag @tagClass">@product.Tag</span>
+            }
+            @if (!string.IsNullOrEmpty(product.ImagePath))
+            {
+              <img src="@product.ImagePath" alt="@product.Name" class="product-photo"
+                   loading="lazy"
+                   onerror="this.closest('.product-img').classList.add('img-error')" />
+            }
+            else
+            {
+              <span class="emoji-display">@product.Emoji</span>
+            }
           </div>
+          <div class="product-info">
+            <div class="product-name">@product.Name</div>
+            <div class="product-desc">@product.Description</div>
+            <div class="product-price">
+              @usdPrice@if (!string.IsNullOrEmpty(product.PriceSuffix))
+              {<span class="price-suffix">@product.PriceSuffix</span>}
+            </div>
+          </div>
+        </a>
+        <div class="product-card-actions">
+          <button type="button" class="btn-add-cart"
+                  onclick="alert('Coming soon — the 80s are loading...')">Add to Cart</button>
         </div>
-      </a>
+      </div>
     }
   </div>
 </section>

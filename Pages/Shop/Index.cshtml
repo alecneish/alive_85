@@ -8,11 +8,10 @@
   <div class="section-label">// Full Collection</div>
   <h2 class="section-title">The alive85 Shop</h2>
   <p class="section-desc">Original designs inspired by the golden decade. Limited runs, maximum nostalgia. Every item ships with a piece of the 80s inside.</p>
-  <div class="shop-filters" id="shop-filters" role="group" aria-label="Filter products by category">
+  <div class="shop-filters" id="shop-filters" role="group" aria-label="Filter products by type">
     <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
-    <button class="filter-btn" data-filter="New" aria-pressed="false">New</button>
-    <button class="filter-btn" data-filter="Hot" aria-pressed="false">Hot</button>
-    <button class="filter-btn" data-filter="Ltd" aria-pressed="false">Ltd</button>
+    <button class="filter-btn" data-filter="Vintage Original" aria-pressed="false">Vintage Original</button>
+    <button class="filter-btn" data-filter="Retro Reissue" aria-pressed="false">Retro Reissue</button>
   </div>
 </section>
 
@@ -20,30 +19,40 @@
   <div class="product-grid" id="product-grid">
     @foreach (var product in Model.Products)
     {
-      <a class="product-card" asp-page="/Shop/Product" asp-route-id="@product.Id" data-tag="@(product.Tag ?? "")">
-        <div class="product-img">
-          @if (!string.IsNullOrEmpty(product.Tag))
-          {
-            <span class="product-tag">@product.Tag</span>
-          }
-          @if (!string.IsNullOrEmpty(product.ImagePath))
-          {
-            <img src="@product.ImagePath" alt="@product.Name" class="product-svg" />
-          }
-          else
-          {
-            <span class="emoji-display">@product.Emoji</span>
-          }
-        </div>
-        <div class="product-info">
-          <div class="product-name">@product.Name</div>
-          <div class="product-desc">@product.Description</div>
-          <div class="product-price">
-            @product.Price.ToString("C")@if (!string.IsNullOrEmpty(product.PriceSuffix))
-            {<span class="price-suffix">@product.PriceSuffix</span>}
+      var usdPrice = product.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+      var tagClass = product.Tag == "Retro Reissue" ? "tag-rose" : "tag-gold";
+      <div class="product-card" data-tag="@(product.Tag ?? "")">
+        <a class="product-card-link" asp-page="/Shop/Product" asp-route-id="@product.Id">
+          <div class="product-img" data-name="@product.Name">
+            @if (!string.IsNullOrEmpty(product.Tag))
+            {
+              <span class="product-tag @tagClass">@product.Tag</span>
+            }
+            @if (!string.IsNullOrEmpty(product.ImagePath))
+            {
+              <img src="@product.ImagePath" alt="@product.Name" class="product-photo"
+                   loading="lazy"
+                   onerror="this.closest('.product-img').classList.add('img-error')" />
+            }
+            else
+            {
+              <span class="emoji-display">@product.Emoji</span>
+            }
           </div>
+          <div class="product-info">
+            <div class="product-name">@product.Name</div>
+            <div class="product-desc">@product.Description</div>
+            <div class="product-price">
+              @usdPrice@if (!string.IsNullOrEmpty(product.PriceSuffix))
+              {<span class="price-suffix">@product.PriceSuffix</span>}
+            </div>
+          </div>
+        </a>
+        <div class="product-card-actions">
+          <button type="button" class="btn-add-cart"
+                  onclick="alert('Coming soon — the 80s are loading...')">Add to Cart</button>
         </div>
-      </a>
+      </div>
     }
   </div>
 </div>
